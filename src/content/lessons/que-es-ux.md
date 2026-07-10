@@ -2,6 +2,7 @@
 title: '¿Qué es UX y por qué importa?'
 description: 'Descubre qué significa experiencia de usuario, en qué se diferencia del UI y por qué las empresas invierten en ella.'
 category: ux
+level: beginner
 order: 1
 exercises:
     - id: que-es-ux-mc-1
@@ -46,6 +47,10 @@ El término lo popularizó Don Norman, investigador cognitivo que trabajó en Ap
 ## UX no es lo mismo que UI
 
 Es habitual confundir UX con UI (interfaz de usuario), pero son cosas distintas y complementarias. El UI es la capa visual y tangible: los colores, la tipografía, los iconos, la disposición de los elementos en pantalla. El UX es la disciplina que decide _qué_ debe existir en esa pantalla y _por qué_, basándose en las necesidades reales de las personas que la van a usar. Una interfaz puede ser visualmente impecable y aun así tener una experiencia pésima, por ejemplo si el flujo de compra tiene ocho pasos innecesarios o si la información importante está escondida.
+
+## Las siete facetas de una buena experiencia
+
+El investigador Peter Morville popularizó un modelo muy útil para desmenuzar qué significa "buena UX" en la práctica, conocido como el panal de la experiencia de usuario (_UX honeycomb_). Según este modelo, para que un producto ofrezca una buena experiencia debería ser, a la vez: **útil** (resuelve una necesidad real), **usable** (se puede operar con facilidad), **encontrable** (la información y las funciones se localizan sin esfuerzo), **creíble** (el usuario confía en lo que ve), **deseable** (genera una respuesta emocional positiva, no solo funcional), **accesible** (lo puede usar cualquier persona, incluidas las que tienen alguna discapacidad) y, como consecuencia de todo lo anterior, **valioso** (aporta valor tanto a quien lo usa como al negocio que lo ofrece). Ninguna de estas facetas basta por sí sola: un producto puede ser muy usable y aun así fracasar si no es útil, o ser precioso y aun así fallar si no es accesible.
 
 ## Por qué las empresas invierten en ello
 

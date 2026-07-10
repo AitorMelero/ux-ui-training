@@ -2,7 +2,8 @@
 title: 'Arquitectura de la información'
 description: 'Organiza contenido y navegación para que las personas encuentren lo que buscan sin esfuerzo.'
 category: ux
-order: 3
+level: intermediate
+order: 5
 exercises:
     - id: arquitectura-mc-1
       type: multiple-choice
@@ -62,6 +63,10 @@ Imagina un edificio sin planos: pasillos que no llevan a ninguna parte, puertas 
 
 Tres piezas sostienen una buena arquitectura de la información. Primero, la **jerarquía**: la estructura de niveles (secciones, subsecciones, páginas) que organiza el contenido de lo general a lo específico. Segundo, el **etiquetado**: los nombres que usamos para cada categoría o enlace, que deben coincidir con el vocabulario mental del usuario y no con la jerga interna de la empresa. Tercero, la **navegación**: los caminos y mecanismos (menús, buscadores, breadcrumbs, enlaces relacionados) que permiten moverse por esa jerarquía. Cuando cualquiera de estas tres piezas falla, el usuario se pierde, aunque el diseño visual sea impecable.
 
+## Esquemas de organización: exactos y ambiguos
+
+No todo el contenido se organiza de la misma forma. Los **esquemas exactos** dividen el contenido en categorías objetivas y no solapadas, fáciles de aplicar pero que exigen que el usuario ya sepa lo que busca: alfabético (un directorio de contactos), cronológico (un archivo de noticias por fecha) o geográfico (tiendas por ciudad). Los **esquemas ambiguos**, en cambio, agrupan por criterios sujetos a interpretación —temas, tareas, audiencia o metáforas— y son más útiles cuando el usuario está explorando sin un objetivo exacto, aunque son más difíciles de diseñar bien porque dos personas razonables pueden discrepar sobre dónde debería ir un contenido concreto. La mayoría de los productos digitales combinan ambos: un e-commerce usa categorías temáticas ambiguas (Ropa, Calzado) para explorar y un buscador con filtros exactos (talla, precio, color) para quien ya sabe lo que quiere.
+
 ## Cómo se valida una estructura
 
-La arquitectura de la información no se decide por intuición: se valida con usuarios reales. Dos técnicas muy usadas son el **card sorting**, donde se pide a un grupo de personas que agrupe y nombre tarjetas de contenido según su propia lógica (revelando cómo esperan que esté organizado el sitio), y el **tree testing**, donde se comprueba si las personas son capaces de encontrar información concreta navegando solo por una estructura de texto, sin diseño visual de por medio. Ambas técnicas ayudan a detectar, antes de construir nada, si la estructura propuesta tiene sentido para quienes la van a usar de verdad.
+La arquitectura de la información no se decide por intuición: se valida con usuarios reales. Dos técnicas muy usadas son el **card sorting**, donde se pide a un grupo de personas que agrupe y nombre tarjetas de contenido según su propia lógica (revelando cómo esperan que esté organizado el sitio), y el **tree testing**, donde se comprueba si las personas son capaces de encontrar información concreta navegando solo por una estructura de texto, sin diseño visual de por medio. Ambas técnicas ayudan a detectar, antes de construir nada, si la estructura propuesta tiene sentido para quienes la van a usar de verdad. Esta lección cubre los fundamentos; la lección avanzada «Arquitectura de la información avanzada» profundiza en sistemas de navegación, taxonomías y las variantes de card sorting y tree testing.

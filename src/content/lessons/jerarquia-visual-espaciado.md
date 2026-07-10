@@ -2,6 +2,7 @@
 title: 'Jerarquía visual, espaciado y grid'
 description: 'Usa tamaño, espaciado y una retícula consistente para guiar la mirada del usuario por la pantalla.'
 category: ui
+level: beginner
 order: 4
 exercises:
     - id: jerarquia-mc-1
@@ -60,6 +61,40 @@ Cuando alguien mira una pantalla por primera vez, no lee palabra por palabra: la
 ## El espacio en blanco también diseña
 
 Es tentador pensar que el espacio vacío de una interfaz es espacio "desperdiciado", pero ocurre justo lo contrario: el espacio en blanco (o _whitespace_) es una herramienta de diseño activa. Por el principio de proximidad de la Gestalt, los elementos que están cerca entre sí se perciben como relacionados, y los que están separados por más espacio se perciben como grupos distintos. Un formulario con las etiquetas pegadas a sus campos, pero con más separación entre un grupo de campos y el siguiente, comunica esa agrupación sin necesidad de líneas divisorias ni cajas. Además, el espacio en blanco da a los ojos del usuario zonas de descanso, reduciendo la sensación de saturación en pantallas con mucho contenido.
+
+Compara estas dos tarjetas: contienen el mismo contenido, pero solo el espaciado decide si se perciben como un bloque saturado o como información fácil de escanear.
+
+<div style="display:flex;flex-wrap:wrap;gap:1.5rem;margin:1.25rem 0;">
+    <div style="flex:1;min-width:220px;padding:0.35rem;border-radius:0.5rem;border:1px solid #e03131;">
+        <p style="margin:0;font-weight:700;">Plan Pro</p>
+        <p style="margin:0;font-size:0.85rem;">19€/mes</p>
+        <p style="margin:0;font-size:0.8rem;color:#495057;">Incluye soporte prioritario, exportación ilimitada y hasta 10 proyectos activos.</p>
+        <p style="margin:0;font-size:0.75rem;color:#e03131;">Sin espaciado: todo se percibe como un único bloque denso.</p>
+    </div>
+    <div style="flex:1;min-width:220px;padding:1.25rem;border-radius:0.5rem;border:1px solid #2f9e44;">
+        <p style="margin:0 0 0.5rem;font-weight:700;">Plan Pro</p>
+        <p style="margin:0 0 0.75rem;font-size:0.85rem;">19€/mes</p>
+        <p style="margin:0 0 0.75rem;font-size:0.8rem;color:#495057;">Incluye soporte prioritario, exportación ilimitada y hasta 10 proyectos activos.</p>
+        <p style="margin:0;font-size:0.75rem;color:#2f9e44;">Con espaciado: cada dato se lee como un grupo independiente.</p>
+    </div>
+</div>
+
+## Una escala de espaciado, no valores sueltos
+
+Igual que la tipografía se organiza en una escala de tamaños, el espaciado de un sistema de diseño maduro se organiza en una **escala de espaciado**: un conjunto pequeño de valores (normalmente múltiplos de 4px u 8px) que se reutilizan para todos los márgenes, rellenos (_padding_) y separaciones entre elementos. Elegir un valor de la escala en lugar de "lo que quede bien a ojo" evita que cada pantalla acabe con separaciones ligeramente distintas (11px aquí, 13px allá) que el ojo no distingue conscientemente pero que sí percibe como desorden:
+
+<div style="display:flex;align-items:flex-end;gap:0.75rem;margin:1.25rem 0;">
+    <div style="text-align:center;"><div style="width:4px;height:4px;background:#364fc7;"></div><p style="margin:0.35rem 0 0;font-size:0.7rem;">4</p></div>
+    <div style="text-align:center;"><div style="width:8px;height:8px;background:#364fc7;"></div><p style="margin:0.35rem 0 0;font-size:0.7rem;">8</p></div>
+    <div style="text-align:center;"><div style="width:12px;height:12px;background:#364fc7;"></div><p style="margin:0.35rem 0 0;font-size:0.7rem;">12</p></div>
+    <div style="text-align:center;"><div style="width:16px;height:16px;background:#364fc7;"></div><p style="margin:0.35rem 0 0;font-size:0.7rem;">16</p></div>
+    <div style="text-align:center;"><div style="width:24px;height:24px;background:#364fc7;"></div><p style="margin:0.35rem 0 0;font-size:0.7rem;">24</p></div>
+    <div style="text-align:center;"><div style="width:32px;height:32px;background:#364fc7;"></div><p style="margin:0.35rem 0 0;font-size:0.7rem;">32</p></div>
+    <div style="text-align:center;"><div style="width:48px;height:48px;background:#364fc7;"></div><p style="margin:0.35rem 0 0;font-size:0.7rem;">48</p></div>
+    <div style="text-align:center;"><div style="width:64px;height:64px;background:#364fc7;"></div><p style="margin:0.35rem 0 0;font-size:0.7rem;">64</p></div>
+</div>
+
+Esta escala también resuelve una duda habitual de quien empieza: cuánto espacio dejar "entre elementos relacionados" frente a "entre grupos distintos". Una convención común es usar los valores pequeños de la escala (4-8px) para el espacio interno entre elementos muy relacionados (una etiqueta y su campo), valores medios (16-24px) para separar componentes dentro de una misma sección, y valores grandes (32-64px) para separar secciones completas entre sí.
 
 ## El grid como columna vertebral
 

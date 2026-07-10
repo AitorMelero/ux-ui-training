@@ -2,7 +2,8 @@
 title: 'Wireframing y prototipado'
 description: 'Entiende para qué sirve cada nivel de fidelidad y cuándo usar wireframes, mockups o prototipos interactivos.'
 category: ux
-order: 4
+level: intermediate
+order: 7
 exercises:
     - id: wireframing-mc-1
       type: multiple-choice
@@ -55,6 +56,44 @@ exercises:
 
 Wireframing es el proceso de representar la estructura de una pantalla —qué elementos hay, en qué orden y con qué prioridad— usando formas simples: rectángulos, líneas y texto de relleno, casi siempre en escala de grises. La idea es deliberada: al eliminar el color, las imágenes finales y la tipografía cuidada, el equipo (y las personas que prueban el diseño) se concentra en si la estructura y el contenido tienen sentido, sin que un buen acabado visual "tape" un problema de fondo, como un formulario mal ordenado o un botón de llamada a la acción poco visible.
 
+Para que la diferencia entre "estructura" y "acabado visual" se vea de un vistazo, compara estos dos bloques: representan la misma cabecera de página, primero como wireframe y después como mockup de alta fidelidad.
+
+<div style="display:flex;flex-wrap:wrap;gap:1.5rem;margin:1.25rem 0;">
+    <div style="flex:1;min-width:240px;">
+        <p style="margin:0 0 0.5rem;font-size:0.78rem;font-weight:700;text-transform:uppercase;color:#495057;">Wireframe</p>
+        <div style="border:2px solid #adb5bd;border-radius:0.25rem;padding:0.75rem;background:#f8f9fa;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-block-end:0.75rem;">
+                <div style="width:64px;height:16px;background:#ced4da;"></div>
+                <div style="display:flex;gap:0.4rem;">
+                    <div style="width:36px;height:12px;background:#ced4da;"></div>
+                    <div style="width:36px;height:12px;background:#ced4da;"></div>
+                    <div style="width:36px;height:12px;background:#ced4da;"></div>
+                </div>
+            </div>
+            <div style="width:70%;height:20px;background:#ced4da;margin-block-end:0.5rem;"></div>
+            <div style="width:90%;height:10px;background:#e9ecef;margin-block-end:0.4rem;"></div>
+            <div style="width:50%;height:10px;background:#e9ecef;margin-block-end:0.75rem;"></div>
+            <div style="width:96px;height:28px;background:#adb5bd;"></div>
+        </div>
+    </div>
+    <div style="flex:1;min-width:240px;">
+        <p style="margin:0 0 0.5rem;font-size:0.78rem;font-weight:700;text-transform:uppercase;color:#495057;">Mockup de alta fidelidad</p>
+        <div style="border-radius:0.25rem;padding:0.75rem;background:#ffffff;border:1px solid #d8dbe3;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-block-end:0.75rem;">
+                <div style="font-weight:700;color:#364fc7;font-size:0.9rem;">Acme</div>
+                <div style="display:flex;gap:0.75rem;font-size:0.72rem;color:#495057;">
+                    <span>Producto</span><span>Precios</span><span>Ayuda</span>
+                </div>
+            </div>
+            <div style="font-weight:700;font-size:1.1rem;color:#1c1f26;margin-block-end:0.35rem;">Organiza tu equipo sin esfuerzo</div>
+            <div style="font-size:0.75rem;color:#495057;margin-block-end:0.75rem;">La plataforma todo-en-uno para planificar, seguir y celebrar el trabajo de tu equipo.</div>
+            <div style="display:inline-block;background:#364fc7;color:#fff;font-size:0.78rem;font-weight:600;padding:0.4rem 0.9rem;border-radius:0.4rem;">Empezar gratis</div>
+        </div>
+    </div>
+</div>
+
+El wireframe transmite exactamente la misma estructura (logo, tres enlaces de navegación, titular, texto de apoyo, botón), pero sin ningún color de marca, tipografía definitiva ni copy final, para que la conversación con el equipo se centre en si esa estructura tiene sentido.
+
 ## Niveles de fidelidad
 
 Es útil pensar el proceso de diseño como una escalera de fidelidad creciente. Se empieza con **bocetos en papel**, rapidísimos y desechables, para explorar muchas ideas en poco tiempo. Se sigue con **wireframes digitales de baja fidelidad**, ya con medidas y jerarquía más precisas. Después llegan los **mockups de alta fidelidad**: el diseño visual definitivo, con colores, tipografías e imágenes reales. Y finalmente el **prototipo interactivo**, que conecta esas pantallas con transiciones y zonas clicables para simular la experiencia real de uso. Subir de fidelidad demasiado pronto es un error común: se invierte tiempo puliendo detalles visuales de una estructura que quizás haya que rehacer por completo tras la primera prueba con usuarios.
@@ -62,3 +101,7 @@ Es útil pensar el proceso de diseño como una escalera de fidelidad creciente. 
 ## Prototipar para aprender, no para impresionar
 
 El prototipo no es un entregable decorativo: es una herramienta para aprender antes de programar. Un prototipo navegable permite poner el diseño delante de usuarios reales y observar si consiguen completar tareas, sin haber escrito una sola línea de código de producción. Esto reduce enormemente el coste de los errores: es mucho más barato descubrir en un prototipo que un flujo de pago tiene un paso confuso que descubrirlo después del lanzamiento, cuando corregirlo implica tocar código, hacer pruebas de regresión y desplegar de nuevo.
+
+## Dos ejes de fidelidad, no uno
+
+Es fácil pensar en la fidelidad como una sola escala (de boceto a producto terminado), pero en realidad son dos ejes independientes: la **fidelidad visual** (cuánto se parece a los colores, tipografía e imágenes finales) y la **fidelidad de interacción** (cuánto se comporta como el producto real: transiciones, estados, datos dinámicos). Un wireframe puede tener alta fidelidad de interacción y baja fidelidad visual a la vez —cajas grises perfectamente clicables y navegables— y eso es precisamente lo recomendable cuando se quiere validar un flujo sin que el acabado visual sesgue el feedback de los usuarios hacia comentarios sobre el color en lugar de sobre la estructura.

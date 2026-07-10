@@ -6,11 +6,18 @@ interface Props {
 }
 
 const { lesson } = Astro.props;
+
+const levelLabels: Record<CollectionEntry<'lessons'>['data']['level'], string> = {
+    beginner: 'Principiante',
+    intermediate: 'Intermedio',
+    advanced: 'Avanzado',
+};
 ---
 
 <li class="lesson-card" data-lesson-slug={lesson.id}>
     <a href={`/lessons/${lesson.id}`}>
         <span class="lesson-order">Lección {lesson.data.order}</span>
+        <span class={`lesson-level lesson-level--${lesson.data.level}`}>{levelLabels[lesson.data.level]}</span>
         <span class="lesson-completed-badge" hidden>✓ Completada</span>
         <h3>{lesson.data.title}</h3>
         <p>{lesson.data.description}</p>
@@ -50,6 +57,33 @@ const { lesson } = Astro.props;
         text-transform: uppercase;
         color: #364fc7;
         margin-block-end: 0.35rem;
+        margin-inline-end: 0.5rem;
+    }
+
+    .lesson-level {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        padding: 0.1rem 0.5rem;
+        border-radius: 999px;
+        margin-block-end: 0.35rem;
+    }
+
+    .lesson-level--beginner {
+        color: #2f9e44;
+        background: #ebfbee;
+    }
+
+    .lesson-level--intermediate {
+        color: #e8590c;
+        background: #fff4e6;
+    }
+
+    .lesson-level--advanced {
+        color: #9c36b5;
+        background: #f8f0fc;
     }
 
     .lesson-card h3 {
