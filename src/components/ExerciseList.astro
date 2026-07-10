@@ -1,0 +1,45 @@
+---
+import FreeTextExercise from './exercises/FreeTextExercise.astro';
+import MultipleChoiceExercise from './exercises/MultipleChoiceExercise.astro';
+import OrderingExercise from './exercises/OrderingExercise.astro';
+import type { Exercise } from '../types/exercises';
+
+interface Props {
+    exercises: Exercise[];
+}
+
+const { exercises } = Astro.props;
+---
+
+{
+    exercises.length > 0 && (
+        <section class="exercise-list" aria-label="Practical exercises">
+            <h2>Put it into practice</h2>
+            {exercises.map((exercise, index) => (
+                <div class="exercise-wrapper">
+                    <p class="exercise-number">Exercise {index + 1}</p>
+                    {exercise.type === 'ordering' && <OrderingExercise exercise={exercise} />}
+                    {exercise.type === 'free-text' && <FreeTextExercise exercise={exercise} />}
+                    {exercise.type === 'multiple-choice' && <MultipleChoiceExercise exercise={exercise} />}
+                </div>
+            ))}
+        </section>
+    )
+}
+
+<style>
+    .exercise-list {
+        margin-block-start: 2.5rem;
+        border-block-start: 1px solid #e0e2e8;
+        padding-block-start: 1.5rem;
+    }
+
+    .exercise-number {
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+        color: #6b7280;
+        font-weight: 700;
+        margin-block-end: 0.25rem;
+    }
+</style>

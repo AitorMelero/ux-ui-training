@@ -1,0 +1,242 @@
+---
+import type { OrderingExerciseData } from '../../types/exercises';
+
+interface Props {
+    exercise: OrderingExerciseData;
+}
+
+const { exercise } = Astro.props;
+const correctOrder = JSON.stringify(exercise.items);
+---
+
+<div class="ordering-exercise" data-correct-order={correctOrder}>
+    <p class="exercise-prompt">{exercise.prompt}</p>
+    <ol class="ordering-list">
+        {
+            exercise.items.map((item) => (
+                <li class="ordering-item" draggable="true">
+                    <span class="drag-handle" aria-hidden="true">
+                        ⠿
+                    </span>
+                    <span class="ordering-item-text">{item}</span>
+                    <span class="ordering-item-controls">
+                        <button type="button" class="move-up" aria-label="Move this item up">
+                            ↑
+                        </button>
+                        <button type="button" class="move-down" aria-label="Move this item down">
+                            ↓
+                        </button>
+                    </span>
+                </li>
+            ))
+        }
+    </ol>
+    <button type="button" class="check-btn">Check order</button>
+    <p class="feedback" role="status" aria-live="polite"></p>
+    {
+        exercise.explanation && (
+            <p class="explanation" hidden>
+                {exercise.explanation}
+            </p>
+        )
+    }
+</div>
+
+<style>
+    .ordering-exercise {
+        border: 1px solid #d8dbe3;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        margin-block: 1rem;
+        background: #fafbfc;
+    }
+
+    .exercise-prompt {
+        font-weight: 600;
+        margin-block-start: 0;
+    }
+
+    .ordering-list {
+        list-style: none;
+        margin: 0 0 1rem;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .ordering-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.6rem 0.85rem;
+        border: 1px solid #ccd1db;
+        border-radius: 0.5rem;
+        background: #fff;
+        transition:
+            border-color 0.15s ease,
+            background-color 0.15s ease;
+    }
+
+    .ordering-item.is-correct {
+        border-color: #2f9e44;
+        background: #ebfbee;
+    }
+
+    .ordering-item.is-incorrect {
+        border-color: #e03131;
+        background: #fff5f5;
+    }
+
+    .drag-handle {
+        cursor: grab;
+        color: #868e96;
+        user-select: none;
+    }
+
+    .ordering-item-text {
+        flex: 1;
+    }
+
+    .ordering-item-controls {
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .ordering-item-controls button {
+        min-width: 2.25rem;
+        min-height: 2.25rem;
+        border: 1px solid #ccd1db;
+        border-radius: 0.4rem;
+        background: #fff;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .ordering-item-controls button:hover {
+        background: #f1f3f5;
+    }
+
+    .check-btn {
+        border: none;
+        border-radius: 0.5rem;
+        background: #364fc7;
+        color: #fff;
+        padding: 0.6rem 1.1rem;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .check-btn:hover {
+        background: #2f3ea3;
+    }
+
+    .feedback {
+        min-height: 1.5rem;
+        font-weight: 600;
+    }
+
+    .feedback.is-success {
+        color: #2f9e44;
+    }
+
+    .feedback.is-error {
+        color: #e03131;
+    }
+
+    .explanation {
+        background: #edf2ff;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        margin: 0;
+    }
+</style>
+
+<script>
+    function shuffle<T>(items: T[]): T[] {
+        const result = [...items];
+        for (let i = result.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [result[i], result[j]] = [result[j], result[i]];
+        }
+        return result;
+    }
+
+    function currentOrder(list: HTMLOListElement): string[] {
+        return Array.from(list.querySelectorAll('.ordering-item-text')).map((el) => el.textContent?.trim() ?? '');
+    }
+
+    function moveItem(list: HTMLOListElement, item: HTMLLIElement, direction: -1 | 1): void {
+        const sibling = direction === -1 ? item.previousElementSibling : item.nextElementSibling;
+        if (!sibling) return;
+        if (direction === -1) {
+            list.insertBefore(item, sibling);
+        } else {
+            list.insertBefore(sibling, item);
+        }
+        item.querySelector<HTMLButtonElement>('.move-up')?.focus();
+    }
+
+    function initOrderingExercise(container: HTMLElement): void {
+        const list = container.querySelector<HTMLOListElement>('.ordering-list');
+        const checkBtn = container.querySelector<HTMLButtonElement>('.check-btn');
+        const feedback = container.querySelector<HTMLParagraphElement>('.feedback');
+        const explanation = container.querySelector<HTMLParagraphElement>('.explanation');
+        const correctOrderRaw = container.dataset.correctOrder;
+        if (!list || !checkBtn || !feedback || !correctOrderRaw) return;
+
+        const correctOrder = JSON.parse(correctOrderRaw) as string[];
+
+        const items = Array.from(list.children) as HTMLLIElement[];
+        list.replaceChildren(...shuffle(items));
+
+        list.addEventListener('click', (event) => {
+            const target = event.target as HTMLElement;
+            const item = target.closest<HTMLLIElement>('.ordering-item');
+            if (!item) return;
+            if (target.classList.contains('move-up')) {
+                moveItem(list, item, -1);
+            } else if (target.classList.contains('move-down')) {
+                moveItem(list, item, 1);
+            }
+        });
+
+        let draggedItem: HTMLLIElement | null = null;
+        list.addEventListener('dragstart', (event) => {
+            draggedItem = (event.target as HTMLElement).closest<HTMLLIElement>('.ordering-item');
+        });
+        list.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const target = (event.target as HTMLElement).closest<HTMLLIElement>('.ordering-item');
+            if (!target || !draggedItem || target === draggedItem) return;
+            const rect = target.getBoundingClientRect();
+            const insertBefore = event.clientY - rect.top < rect.height / 2;
+            list.insertBefore(draggedItem, insertBefore ? target : target.nextSibling);
+        });
+        list.addEventListener('dragend', () => {
+            draggedItem = null;
+        });
+
+        checkBtn.addEventListener('click', () => {
+            const order = currentOrder(list);
+            const isCorrect = order.every((text, index) => text === correctOrder[index]);
+
+            Array.from(list.children).forEach((child, index) => {
+                child.classList.remove('is-correct', 'is-incorrect');
+                child.classList.add(order[index] === correctOrder[index] ? 'is-correct' : 'is-incorrect');
+            });
+
+            feedback.textContent = isCorrect
+                ? 'Correct! That is the right order.'
+                : 'Not quite. Review the items marked in red and try again.';
+            feedback.classList.toggle('is-success', isCorrect);
+            feedback.classList.toggle('is-error', !isCorrect);
+
+            if (isCorrect && explanation) {
+                explanation.hidden = false;
+            }
+        });
+    }
+
+    document.querySelectorAll<HTMLElement>('.ordering-exercise').forEach(initOrderingExercise);
+</script>

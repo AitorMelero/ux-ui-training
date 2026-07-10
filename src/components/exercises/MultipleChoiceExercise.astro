@@ -1,0 +1,171 @@
+---
+import type { MultipleChoiceExerciseData } from '../../types/exercises';
+
+interface Props {
+    exercise: MultipleChoiceExerciseData;
+}
+
+const { exercise } = Astro.props;
+const inputType = exercise.allowMultiple ? 'checkbox' : 'radio';
+const groupName = `mc-${exercise.id}`;
+---
+
+<div class="multiple-choice-exercise" data-allow-multiple={String(exercise.allowMultiple)}>
+    <p class="exercise-prompt">{exercise.prompt}</p>
+    <ul class="options-list">
+        {
+            exercise.options.map((option, index) => (
+                <li class="option-item">
+                    <label>
+                        <input
+                            type={inputType}
+                            name={groupName}
+                            value={String(index)}
+                            data-correct={String(option.correct)}
+                        />
+                        <span class="option-text">{option.text}</span>
+                    </label>
+                    {option.explanation && (
+                        <p class="option-explanation" hidden>
+                            {option.explanation}
+                        </p>
+                    )}
+                </li>
+            ))
+        }
+    </ul>
+    <button type="button" class="check-btn">Check answer</button>
+    <p class="feedback" role="status" aria-live="polite"></p>
+</div>
+
+<style>
+    .multiple-choice-exercise {
+        border: 1px solid #d8dbe3;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        margin-block: 1rem;
+        background: #fafbfc;
+    }
+
+    .exercise-prompt {
+        font-weight: 600;
+        margin-block-start: 0;
+    }
+
+    .options-list {
+        list-style: none;
+        margin: 0 0 1rem;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .option-item {
+        padding: 0.6rem 0.85rem;
+        border: 1px solid #ccd1db;
+        border-radius: 0.5rem;
+        background: #fff;
+    }
+
+    .option-item label {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        cursor: pointer;
+    }
+
+    .option-item input {
+        margin-top: 0.2rem;
+    }
+
+    .option-item.is-correct {
+        border-color: #2f9e44;
+        background: #ebfbee;
+    }
+
+    .option-item.is-incorrect {
+        border-color: #e03131;
+        background: #fff5f5;
+    }
+
+    .option-explanation {
+        margin: 0.5rem 0 0;
+        font-size: 0.9rem;
+        color: #495057;
+    }
+
+    .check-btn {
+        border: none;
+        border-radius: 0.5rem;
+        background: #364fc7;
+        color: #fff;
+        padding: 0.6rem 1.1rem;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .check-btn:hover {
+        background: #2f3ea3;
+    }
+
+    .feedback {
+        min-height: 1.5rem;
+        font-weight: 600;
+        margin-block-start: 0.75rem;
+    }
+
+    .feedback.is-success {
+        color: #2f9e44;
+    }
+
+    .feedback.is-error {
+        color: #e03131;
+    }
+</style>
+
+<script>
+    function initMultipleChoiceExercise(container: HTMLElement): void {
+        const checkBtn = container.querySelector<HTMLButtonElement>('.check-btn');
+        const feedback = container.querySelector<HTMLParagraphElement>('.feedback');
+        const inputs = Array.from(container.querySelectorAll<HTMLInputElement>('.option-item input'));
+        if (!checkBtn || !feedback || inputs.length === 0) return;
+
+        checkBtn.addEventListener('click', () => {
+            const anySelected = inputs.some((input) => input.checked);
+            if (!anySelected) {
+                feedback.textContent = 'Select at least one option before checking.';
+                feedback.classList.remove('is-success');
+                feedback.classList.add('is-error');
+                return;
+            }
+
+            let allCorrect = true;
+            inputs.forEach((input) => {
+                const isCorrectOption = input.dataset.correct === 'true';
+                const optionItem = input.closest<HTMLLIElement>('.option-item');
+                const explanation = optionItem?.querySelector<HTMLParagraphElement>('.option-explanation');
+
+                optionItem?.classList.remove('is-correct', 'is-incorrect');
+
+                if (input.checked) {
+                    optionItem?.classList.add(isCorrectOption ? 'is-correct' : 'is-incorrect');
+                    if (explanation) explanation.hidden = false;
+                    if (!isCorrectOption) allCorrect = false;
+                } else if (isCorrectOption) {
+                    optionItem?.classList.add('is-incorrect');
+                    if (explanation) explanation.hidden = false;
+                    allCorrect = false;
+                }
+            });
+
+            feedback.textContent = allCorrect
+                ? 'Correct! Good reasoning.'
+                : 'Not quite. Review the marked options and read the explanation.';
+            feedback.classList.toggle('is-success', allCorrect);
+            feedback.classList.toggle('is-error', !allCorrect);
+        });
+    }
+
+    document.querySelectorAll<HTMLElement>('.multiple-choice-exercise').forEach(initMultipleChoiceExercise);
+</script>

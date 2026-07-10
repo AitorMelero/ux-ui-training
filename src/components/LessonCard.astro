@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    lesson: CollectionEntry<'lessons'>;
+}
+
+const { lesson } = Astro.props;
+---
+
+<li class="lesson-card">
+    <a href={`/lessons/${lesson.id}`}>
+        <span class="lesson-order">Lesson {lesson.data.order}</span>
+        <h3>{lesson.data.title}</h3>
+        <p>{lesson.data.description}</p>
+    </a>
+</li>
+
+<style>
+    .lesson-card {
+        list-style: none;
+    }
+
+    .lesson-card a {
+        display: block;
+        height: 100%;
+        padding: 1.25rem;
+        border: 1px solid #d8dbe3;
+        border-radius: 0.75rem;
+        text-decoration: none;
+        color: inherit;
+        background: #fff;
+        transition:
+            border-color 0.15s ease,
+            transform 0.15s ease;
+    }
+
+    .lesson-card a:hover,
+    .lesson-card a:focus-visible {
+        border-color: #364fc7;
+        transform: translateY(-2px);
+    }
+
+    .lesson-order {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #364fc7;
+        margin-block-end: 0.35rem;
+    }
+
+    .lesson-card h3 {
+        margin: 0 0 0.4rem;
+        font-size: 1.1rem;
+    }
+
+    .lesson-card p {
+        margin: 0;
+        color: #495057;
+        font-size: 0.95rem;
+    }
+</style>

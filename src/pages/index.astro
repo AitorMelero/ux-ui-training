@@ -1,17 +1,66 @@
 ---
+import { getCollection } from 'astro:content';
 
+import LessonCard from '../components/LessonCard.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lessons = await getCollection('lessons');
+
+const byCategory = (category: 'ux' | 'ui') =>
+    lessons.filter((lesson) => lesson.data.category === category).sort((a, b) => a.data.order - b.data.order);
+
+const uxLessons = byCategory('ux');
+const uiLessons = byCategory('ui');
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>mele-astro-template</title>
-    </head>
-    <body>
-        <h1>Hello World</h1>
-    </body>
-</html>
+<BaseLayout title="Learn UX/UI" description="Interactive UX and UI design lessons to take your first steps.">
+    <main class="home">
+        <header class="home-header">
+            <h1>Learn UX/UI</h1>
+            <p>Short theory lessons with practical exercises to reinforce what you learn.</p>
+        </header>
+
+        <section class="lesson-group" aria-labelledby="ux-heading">
+            <h2 id="ux-heading">User Experience (UX)</h2>
+            <ul class="lesson-grid">
+                {uxLessons.map((lesson) => <LessonCard lesson={lesson} />)}
+            </ul>
+        </section>
+
+        <section class="lesson-group" aria-labelledby="ui-heading">
+            <h2 id="ui-heading">User Interface (UI)</h2>
+            <ul class="lesson-grid">
+                {uiLessons.map((lesson) => <LessonCard lesson={lesson} />)}
+            </ul>
+        </section>
+    </main>
+</BaseLayout>
+
+<style>
+    .home {
+        max-width: 64rem;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 4rem;
+    }
+
+    .home-header h1 {
+        margin-block-end: 0.5rem;
+    }
+
+    .home-header p {
+        color: #495057;
+        max-width: 40rem;
+    }
+
+    .lesson-group {
+        margin-block-start: 2.5rem;
+    }
+
+    .lesson-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+        gap: 1rem;
+        margin: 1rem 0 0;
+        padding: 0;
+    }
+</style>
