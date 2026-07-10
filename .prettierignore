@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+coverage
+.astro
+*.min.js
+*-lock.yaml
+public
+.agents
+*-lock.json
