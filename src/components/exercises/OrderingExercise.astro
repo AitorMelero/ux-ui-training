@@ -20,10 +20,10 @@ const correctOrder = JSON.stringify(exercise.items);
                     </span>
                     <span class="ordering-item-text">{item}</span>
                     <span class="ordering-item-controls">
-                        <button type="button" class="move-up" aria-label="Move this item up">
+                        <button type="button" class="move-up" aria-label="Subir este elemento">
                             ↑
                         </button>
-                        <button type="button" class="move-down" aria-label="Move this item down">
+                        <button type="button" class="move-down" aria-label="Bajar este elemento">
                             ↓
                         </button>
                     </span>
@@ -31,7 +31,7 @@ const correctOrder = JSON.stringify(exercise.items);
             ))
         }
     </ol>
-    <button type="button" class="check-btn">Check order</button>
+    <button type="button" class="check-btn">Comprobar orden</button>
     <p class="feedback" role="status" aria-live="polite"></p>
     {
         exercise.explanation && (
@@ -227,8 +227,8 @@ const correctOrder = JSON.stringify(exercise.items);
             });
 
             feedback.textContent = isCorrect
-                ? 'Correct! That is the right order.'
-                : 'Not quite. Review the items marked in red and try again.';
+                ? '¡Correcto! Ese es el orden correcto.'
+                : 'No del todo. Revisa los elementos marcados en rojo e inténtalo de nuevo.';
             feedback.classList.toggle('is-success', isCorrect);
             feedback.classList.toggle('is-error', !isCorrect);
 

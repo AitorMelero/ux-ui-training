@@ -21,9 +21,9 @@ describe('OrderingExercise', () => {
         for (const item of exercise.items) {
             expect(result).toContain(item);
         }
-        expect(result).toContain('Move this item up');
-        expect(result).toContain('Move this item down');
-        expect(result).toContain('Check order');
+        expect(result).toContain('Subir este elemento');
+        expect(result).toContain('Bajar este elemento');
+        expect(result).toContain('Comprobar orden');
     });
 
     test('keeps the explanation hidden until the learner checks the answer', async () => {

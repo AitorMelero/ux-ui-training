@@ -21,7 +21,7 @@ describe('FreeTextExercise', () => {
         expect(result).toContain('¿Cuál es la capital de Francia?');
         expect(result).toContain('<input');
         expect(result).toContain('Escribe la ciudad...');
-        expect(result).toContain('Check');
+        expect(result).toContain('Comprobar');
     });
 
     test('normalizes accepted answers to lowercase for the client-side check', async () => {

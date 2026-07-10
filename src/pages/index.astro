@@ -13,22 +13,22 @@ const uxLessons = byCategory('ux');
 const uiLessons = byCategory('ui');
 ---
 
-<BaseLayout title="Learn UX/UI" description="Interactive UX and UI design lessons to take your first steps.">
+<BaseLayout title="Aprende UX/UI" description="Lecciones interactivas de diseño UX y UI para dar tus primeros pasos.">
     <main class="home">
         <header class="home-header">
-            <h1>Learn UX/UI</h1>
-            <p>Short theory lessons with practical exercises to reinforce what you learn.</p>
+            <h1>Aprende UX/UI</h1>
+            <p>Lecciones breves de teoría con ejercicios prácticos para reforzar lo aprendido.</p>
         </header>
 
         <section class="lesson-group" aria-labelledby="ux-heading">
-            <h2 id="ux-heading">User Experience (UX)</h2>
+            <h2 id="ux-heading">Experiencia de Usuario (UX)</h2>
             <ul class="lesson-grid">
                 {uxLessons.map((lesson) => <LessonCard lesson={lesson} />)}
             </ul>
         </section>
 
         <section class="lesson-group" aria-labelledby="ui-heading">
-            <h2 id="ui-heading">User Interface (UI)</h2>
+            <h2 id="ui-heading">Interfaz de Usuario (UI)</h2>
             <ul class="lesson-grid">
                 {uiLessons.map((lesson) => <LessonCard lesson={lesson} />)}
             </ul>

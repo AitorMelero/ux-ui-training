@@ -9,7 +9,7 @@ describe('index page', () => {
         const container = await AstroContainer.create();
         const result = await container.renderToString(IndexPage);
 
-        expect(result).toContain('Learn UX/UI');
+        expect(result).toContain('Aprende UX/UI');
     });
 
     test('lists every lesson grouped by category', async () => {
@@ -28,7 +28,7 @@ describe('index page', () => {
         const container = await AstroContainer.create();
         const result = await container.renderToString(IndexPage);
 
-        expect(result).toContain('User Experience (UX)');
-        expect(result).toContain('User Interface (UI)');
+        expect(result).toContain('Experiencia de Usuario (UX)');
+        expect(result).toContain('Interfaz de Usuario (UI)');
     });
 });

@@ -15,7 +15,7 @@ describe('lesson detail page', () => {
         const result = await container.renderToString(LessonPage, { props: { lesson } });
 
         expect(result).toContain(lesson.data.title);
-        expect(result).toContain('Put it into practice');
+        expect(result).toContain('Ponlo en práctica');
         for (const exercise of lesson.data.exercises) {
             expect(result).toContain(exercise.prompt);
         }
