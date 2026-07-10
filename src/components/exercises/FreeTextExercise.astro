@@ -1,0 +1,151 @@
+---
+import type { FreeTextExerciseData } from '../../types/exercises';
+
+interface Props {
+    exercise: FreeTextExerciseData;
+}
+
+const { exercise } = Astro.props;
+const acceptedAnswers = JSON.stringify(exercise.acceptedAnswers.map((answer) => answer.trim().toLowerCase()));
+const inputId = `answer-${exercise.id}`;
+---
+
+<div class="free-text-exercise" data-accepted-answers={acceptedAnswers}>
+    <label class="exercise-prompt" for={inputId}>{exercise.prompt}</label>
+    <div class="input-row">
+        <input
+            type="text"
+            id={inputId}
+            class="answer-input"
+            placeholder={exercise.placeholder ?? 'Type your answer here...'}
+            autocomplete="off"
+        />
+        <button type="button" class="check-btn">Check</button>
+    </div>
+    <p class="feedback" role="status" aria-live="polite"></p>
+    {
+        exercise.explanation && (
+            <p class="explanation" hidden>
+                {exercise.explanation}
+            </p>
+        )
+    }
+</div>
+
+<style>
+    .free-text-exercise {
+        border: 1px solid #d8dbe3;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        margin-block: 1rem;
+        background: #fafbfc;
+    }
+
+    .exercise-prompt {
+        display: block;
+        font-weight: 600;
+        margin-block-end: 0.75rem;
+    }
+
+    .input-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .answer-input {
+        flex: 1;
+        min-width: 12rem;
+        padding: 0.6rem 0.75rem;
+        border: 1px solid #ccd1db;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .answer-input.is-correct {
+        border-color: #2f9e44;
+    }
+
+    .answer-input.is-incorrect {
+        border-color: #e03131;
+    }
+
+    .check-btn {
+        border: none;
+        border-radius: 0.5rem;
+        background: #364fc7;
+        color: #fff;
+        padding: 0.6rem 1.1rem;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .check-btn:hover {
+        background: #2f3ea3;
+    }
+
+    .feedback {
+        min-height: 1.5rem;
+        font-weight: 600;
+        margin-block-start: 0.75rem;
+    }
+
+    .feedback.is-success {
+        color: #2f9e44;
+    }
+
+    .feedback.is-error {
+        color: #e03131;
+    }
+
+    .explanation {
+        background: #edf2ff;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        margin: 0.75rem 0 0;
+    }
+</style>
+
+<script>
+    function initFreeTextExercise(container: HTMLElement): void {
+        const input = container.querySelector<HTMLInputElement>('.answer-input');
+        const checkBtn = container.querySelector<HTMLButtonElement>('.check-btn');
+        const feedback = container.querySelector<HTMLParagraphElement>('.feedback');
+        const explanation = container.querySelector<HTMLParagraphElement>('.explanation');
+        const acceptedAnswersRaw = container.dataset.acceptedAnswers;
+        if (!input || !checkBtn || !feedback || !acceptedAnswersRaw) return;
+
+        const acceptedAnswers = JSON.parse(acceptedAnswersRaw) as string[];
+
+        function checkAnswer(): void {
+            if (!input || !feedback) return;
+            const value = input.value.trim().toLowerCase();
+            const isCorrect = value.length > 0 && acceptedAnswers.includes(value);
+
+            input.classList.toggle('is-correct', isCorrect);
+            input.classList.toggle('is-incorrect', !isCorrect);
+
+            feedback.textContent = isCorrect
+                ? 'Correct!'
+                : value.length === 0
+                  ? 'Type an answer before checking it.'
+                  : 'That is not the answer we are looking for. Read the explanation and try again.';
+            feedback.classList.toggle('is-success', isCorrect);
+            feedback.classList.toggle('is-error', value.length > 0 && !isCorrect);
+
+            if (value.length > 0 && explanation) {
+                explanation.hidden = false;
+            }
+        }
+
+        checkBtn.addEventListener('click', checkAnswer);
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                checkAnswer();
+            }
+        });
+    }
+
+    document.querySelectorAll<HTMLElement>('.free-text-exercise').forEach(initFreeTextExercise);
+</script>

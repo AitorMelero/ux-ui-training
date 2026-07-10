@@ -12,8 +12,12 @@
         "format:fix": "prettier --config .prettierrc --write .",
         "lint:js:check": "eslint .",
         "lint:js:fix": "eslint . --fix",
+        "sync": "node scripts/sync-content.mjs",
+        "pretest": "pnpm sync",
         "test": "vitest",
+        "pretest:coverage": "pnpm sync",
         "test:coverage": "vitest run --coverage",
+        "pretest:ui": "pnpm sync",
         "test:ui": "vitest --ui",
         "astro": "astro"
     },
