@@ -31,4 +31,16 @@ describe('index page', () => {
         expect(result).toContain('Experiencia de Usuario (UX)');
         expect(result).toContain('Interfaz de Usuario (UI)');
     });
+
+    test('marks up every lesson card with its slug and a hidden completed indicator', async () => {
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(IndexPage);
+        const lessons = await getCollection('lessons');
+
+        for (const lesson of lessons) {
+            expect(result).toContain(`data-lesson-slug="${lesson.id}"`);
+        }
+        expect(result).toContain('lesson-completed-badge');
+        expect(result).toMatch(/<span class="lesson-completed-badge" hidden[ >]/);
+    });
 });

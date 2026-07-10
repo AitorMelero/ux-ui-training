@@ -10,7 +10,11 @@ const inputType = exercise.allowMultiple ? 'checkbox' : 'radio';
 const groupName = `mc-${exercise.id}`;
 ---
 
-<div class="multiple-choice-exercise" data-allow-multiple={String(exercise.allowMultiple)}>
+<div
+    class="multiple-choice-exercise"
+    data-exercise-id={exercise.id}
+    data-allow-multiple={String(exercise.allowMultiple)}
+>
     <p class="exercise-prompt">{exercise.prompt}</p>
     <ul class="options-list">
         {
@@ -125,6 +129,26 @@ const groupName = `mc-${exercise.id}`;
 </style>
 
 <script>
+    import { recordExerciseResult, syncLessonCompletionFromExercises } from '../../lib/progress';
+
+    function recordExerciseCompletion(container: HTMLElement, correct: boolean): void {
+        const list = container.closest<HTMLElement>('.exercise-list[data-lesson-slug]');
+        const lessonSlug = list?.dataset.lessonSlug;
+        const exerciseId = container.dataset.exerciseId;
+        if (!list || !lessonSlug || !exerciseId) return;
+
+        recordExerciseResult(lessonSlug, exerciseId, correct);
+
+        const exerciseIdsRaw = list.dataset.exerciseIds;
+        if (!exerciseIdsRaw) return;
+        try {
+            const exerciseIds = JSON.parse(exerciseIdsRaw) as string[];
+            syncLessonCompletionFromExercises(lessonSlug, exerciseIds);
+        } catch {
+            // Malformed data attribute — nothing to sync.
+        }
+    }
+
     function initMultipleChoiceExercise(container: HTMLElement): void {
         const checkBtn = container.querySelector<HTMLButtonElement>('.check-btn');
         const feedback = container.querySelector<HTMLParagraphElement>('.feedback');
@@ -164,6 +188,8 @@ const groupName = `mc-${exercise.id}`;
                 : 'No del todo. Revisa las opciones marcadas y lee la explicación.';
             feedback.classList.toggle('is-success', allCorrect);
             feedback.classList.toggle('is-error', !allCorrect);
+
+            recordExerciseCompletion(container, allCorrect);
         });
     }
 

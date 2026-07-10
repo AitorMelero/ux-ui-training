@@ -10,7 +10,7 @@ const acceptedAnswers = JSON.stringify(exercise.acceptedAnswers.map((answer) => 
 const inputId = `answer-${exercise.id}`;
 ---
 
-<div class="free-text-exercise" data-accepted-answers={acceptedAnswers}>
+<div class="free-text-exercise" data-exercise-id={exercise.id} data-accepted-answers={acceptedAnswers}>
     <label class="exercise-prompt" for={inputId}>{exercise.prompt}</label>
     <div class="input-row">
         <input
@@ -107,6 +107,26 @@ const inputId = `answer-${exercise.id}`;
 </style>
 
 <script>
+    import { recordExerciseResult, syncLessonCompletionFromExercises } from '../../lib/progress';
+
+    function recordExerciseCompletion(container: HTMLElement, correct: boolean): void {
+        const list = container.closest<HTMLElement>('.exercise-list[data-lesson-slug]');
+        const lessonSlug = list?.dataset.lessonSlug;
+        const exerciseId = container.dataset.exerciseId;
+        if (!list || !lessonSlug || !exerciseId) return;
+
+        recordExerciseResult(lessonSlug, exerciseId, correct);
+
+        const exerciseIdsRaw = list.dataset.exerciseIds;
+        if (!exerciseIdsRaw) return;
+        try {
+            const exerciseIds = JSON.parse(exerciseIdsRaw) as string[];
+            syncLessonCompletionFromExercises(lessonSlug, exerciseIds);
+        } catch {
+            // Malformed data attribute — nothing to sync.
+        }
+    }
+
     function initFreeTextExercise(container: HTMLElement): void {
         const input = container.querySelector<HTMLInputElement>('.answer-input');
         const checkBtn = container.querySelector<HTMLButtonElement>('.check-btn');
@@ -136,6 +156,8 @@ const inputId = `answer-${exercise.id}`;
             if (value.length > 0 && explanation) {
                 explanation.hidden = false;
             }
+
+            recordExerciseCompletion(container, isCorrect);
         }
 
         checkBtn.addEventListener('click', checkAnswer);

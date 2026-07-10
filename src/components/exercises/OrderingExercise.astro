@@ -9,7 +9,7 @@ const { exercise } = Astro.props;
 const correctOrder = JSON.stringify(exercise.items);
 ---
 
-<div class="ordering-exercise" data-correct-order={correctOrder}>
+<div class="ordering-exercise" data-exercise-id={exercise.id} data-correct-order={correctOrder}>
     <p class="exercise-prompt">{exercise.prompt}</p>
     <ol class="ordering-list">
         {
@@ -153,6 +153,26 @@ const correctOrder = JSON.stringify(exercise.items);
 </style>
 
 <script>
+    import { recordExerciseResult, syncLessonCompletionFromExercises } from '../../lib/progress';
+
+    function recordExerciseCompletion(container: HTMLElement, correct: boolean): void {
+        const list = container.closest<HTMLElement>('.exercise-list[data-lesson-slug]');
+        const lessonSlug = list?.dataset.lessonSlug;
+        const exerciseId = container.dataset.exerciseId;
+        if (!list || !lessonSlug || !exerciseId) return;
+
+        recordExerciseResult(lessonSlug, exerciseId, correct);
+
+        const exerciseIdsRaw = list.dataset.exerciseIds;
+        if (!exerciseIdsRaw) return;
+        try {
+            const exerciseIds = JSON.parse(exerciseIdsRaw) as string[];
+            syncLessonCompletionFromExercises(lessonSlug, exerciseIds);
+        } catch {
+            // Malformed data attribute — nothing to sync.
+        }
+    }
+
     function shuffle<T>(items: T[]): T[] {
         const result = [...items];
         for (let i = result.length - 1; i > 0; i--) {
@@ -235,6 +255,8 @@ const correctOrder = JSON.stringify(exercise.items);
             if (isCorrect && explanation) {
                 explanation.hidden = false;
             }
+
+            recordExerciseCompletion(container, isCorrect);
         });
     }
 

@@ -1,0 +1,99 @@
+---
+interface Props {
+    lessonSlug: string;
+}
+
+const { lessonSlug } = Astro.props;
+---
+
+<div class="completion-toggle" data-lesson-slug={lessonSlug}>
+    <button type="button" class="completion-toggle-btn" aria-pressed="false">Marcar como completada</button>
+    <p class="completion-toggle-status" role="status" aria-live="polite">Aún no has completado esta lección.</p>
+</div>
+
+<style>
+    .completion-toggle {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        margin-block: 1.5rem;
+        padding: 1rem 1.25rem;
+        border: 1px solid #d8dbe3;
+        border-radius: 0.75rem;
+        background: #fafbfc;
+    }
+
+    .completion-toggle.is-completed {
+        border-color: #2f9e44;
+        background: #ebfbee;
+    }
+
+    .completion-toggle-btn {
+        border: none;
+        border-radius: 0.5rem;
+        background: #364fc7;
+        color: #fff;
+        padding: 0.6rem 1.1rem;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .completion-toggle-btn:hover {
+        background: #2f3ea3;
+    }
+
+    .completion-toggle.is-completed .completion-toggle-btn {
+        background: #2f9e44;
+    }
+
+    .completion-toggle.is-completed .completion-toggle-btn:hover {
+        background: #268a3b;
+    }
+
+    .completion-toggle-status {
+        margin: 0;
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .completion-toggle.is-completed .completion-toggle-status {
+        color: #2f9e44;
+    }
+</style>
+
+<script>
+    import { isLessonCompleted, setLessonCompleted } from '../lib/progress';
+
+    const COMPLETED_LABEL = 'Marcar como no completada';
+    const NOT_COMPLETED_LABEL = 'Marcar como completada';
+    const COMPLETED_STATUS = 'Lección completada.';
+    const NOT_COMPLETED_STATUS = 'Aún no has completado esta lección.';
+
+    function renderState(container: HTMLElement, completed: boolean): void {
+        const button = container.querySelector<HTMLButtonElement>('.completion-toggle-btn');
+        const status = container.querySelector<HTMLParagraphElement>('.completion-toggle-status');
+        if (!button || !status) return;
+
+        button.textContent = completed ? COMPLETED_LABEL : NOT_COMPLETED_LABEL;
+        button.setAttribute('aria-pressed', String(completed));
+        status.textContent = completed ? COMPLETED_STATUS : NOT_COMPLETED_STATUS;
+        container.classList.toggle('is-completed', completed);
+    }
+
+    function initCompletionToggle(container: HTMLElement): void {
+        const lessonSlug = container.dataset.lessonSlug;
+        const button = container.querySelector<HTMLButtonElement>('.completion-toggle-btn');
+        if (!lessonSlug || !button) return;
+
+        renderState(container, isLessonCompleted(lessonSlug));
+
+        button.addEventListener('click', () => {
+            const nextCompleted = !isLessonCompleted(lessonSlug);
+            setLessonCompleted(lessonSlug, nextCompleted);
+            renderState(container, nextCompleted);
+        });
+    }
+
+    document.querySelectorAll<HTMLElement>('.completion-toggle').forEach(initCompletionToggle);
+</script>

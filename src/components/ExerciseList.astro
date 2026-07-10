@@ -6,14 +6,21 @@ import type { Exercise } from '../types/exercises';
 
 interface Props {
     exercises: Exercise[];
+    lessonSlug: string;
 }
 
-const { exercises } = Astro.props;
+const { exercises, lessonSlug } = Astro.props;
+const exerciseIds = JSON.stringify(exercises.map((exercise) => exercise.id));
 ---
 
 {
     exercises.length > 0 && (
-        <section class="exercise-list" aria-label="Ejercicios prácticos">
+        <section
+            class="exercise-list"
+            aria-label="Ejercicios prácticos"
+            data-lesson-slug={lessonSlug}
+            data-exercise-ids={exerciseIds}
+        >
             <h2>Ponlo en práctica</h2>
             {exercises.map((exercise, index) => (
                 <div class="exercise-wrapper">
