@@ -17,10 +17,10 @@ const inputId = `answer-${exercise.id}`;
             type="text"
             id={inputId}
             class="answer-input"
-            placeholder={exercise.placeholder ?? 'Type your answer here...'}
+            placeholder={exercise.placeholder ?? 'Escribe tu respuesta aquí...'}
             autocomplete="off"
         />
-        <button type="button" class="check-btn">Check</button>
+        <button type="button" class="check-btn">Comprobar</button>
     </div>
     <p class="feedback" role="status" aria-live="polite"></p>
     {
@@ -126,10 +126,10 @@ const inputId = `answer-${exercise.id}`;
             input.classList.toggle('is-incorrect', !isCorrect);
 
             feedback.textContent = isCorrect
-                ? 'Correct!'
+                ? '¡Correcto!'
                 : value.length === 0
-                  ? 'Type an answer before checking it.'
-                  : 'That is not the answer we are looking for. Read the explanation and try again.';
+                  ? 'Escribe una respuesta antes de comprobarla.'
+                  : 'Esa no es la respuesta que buscamos. Lee la explicación e inténtalo de nuevo.';
             feedback.classList.toggle('is-success', isCorrect);
             feedback.classList.toggle('is-error', value.length > 0 && !isCorrect);
 

@@ -13,11 +13,11 @@ const { exercises } = Astro.props;
 
 {
     exercises.length > 0 && (
-        <section class="exercise-list" aria-label="Practical exercises">
-            <h2>Put it into practice</h2>
+        <section class="exercise-list" aria-label="Ejercicios prácticos">
+            <h2>Ponlo en práctica</h2>
             {exercises.map((exercise, index) => (
                 <div class="exercise-wrapper">
-                    <p class="exercise-number">Exercise {index + 1}</p>
+                    <p class="exercise-number">Ejercicio {index + 1}</p>
                     {exercise.type === 'ordering' && <OrderingExercise exercise={exercise} />}
                     {exercise.type === 'free-text' && <FreeTextExercise exercise={exercise} />}
                     {exercise.type === 'multiple-choice' && <MultipleChoiceExercise exercise={exercise} />}

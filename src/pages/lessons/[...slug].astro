@@ -18,12 +18,12 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { lesson } = Astro.props as Props;
 const { Content } = await render(lesson);
 
-const categoryLabel = lesson.data.category === 'ux' ? 'User Experience' : 'User Interface';
+const categoryLabel = lesson.data.category === 'ux' ? 'Experiencia de Usuario' : 'Interfaz de Usuario';
 ---
 
 <BaseLayout title={lesson.data.title} description={lesson.data.description}>
     <main class="lesson">
-        <a class="back-link" href="/">← Back to all lessons</a>
+        <a class="back-link" href="/">← Volver a todas las lecciones</a>
         <p class="lesson-category">{categoryLabel}</p>
         <h1>{lesson.data.title}</h1>
         <p class="lesson-description">{lesson.data.description}</p>

@@ -34,7 +34,7 @@ const groupName = `mc-${exercise.id}`;
             ))
         }
     </ul>
-    <button type="button" class="check-btn">Check answer</button>
+    <button type="button" class="check-btn">Comprobar respuesta</button>
     <p class="feedback" role="status" aria-live="polite"></p>
 </div>
 
@@ -134,7 +134,7 @@ const groupName = `mc-${exercise.id}`;
         checkBtn.addEventListener('click', () => {
             const anySelected = inputs.some((input) => input.checked);
             if (!anySelected) {
-                feedback.textContent = 'Select at least one option before checking.';
+                feedback.textContent = 'Selecciona al menos una opción antes de comprobar.';
                 feedback.classList.remove('is-success');
                 feedback.classList.add('is-error');
                 return;
@@ -160,8 +160,8 @@ const groupName = `mc-${exercise.id}`;
             });
 
             feedback.textContent = allCorrect
-                ? 'Correct! Good reasoning.'
-                : 'Not quite. Review the marked options and read the explanation.';
+                ? '¡Correcto! Buen razonamiento.'
+                : 'No del todo. Revisa las opciones marcadas y lee la explicación.';
             feedback.classList.toggle('is-success', allCorrect);
             feedback.classList.toggle('is-error', !allCorrect);
         });

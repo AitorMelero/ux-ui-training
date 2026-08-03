@@ -37,7 +37,7 @@ describe('MultipleChoiceExercise', () => {
         expect(result).toContain('¿Qué disciplina define el aspecto visual de un producto?');
         expect(result).toContain('type="radio"');
         expect(result).not.toContain('type="checkbox"');
-        expect(result).toContain('Check answer');
+        expect(result).toContain('Comprobar respuesta');
     });
 
     test('renders checkbox inputs when multiple answers are allowed', async () => {
