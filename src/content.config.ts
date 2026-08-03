@@ -43,7 +43,7 @@ const lessons = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
-        category: z.enum(['ux', 'ui', 'components']),
+        category: z.enum(['ux', 'ui', 'components', 'business']),
         level: z.enum(['beginner', 'intermediate', 'advanced']).default('beginner'),
         subcategory: z.string().optional(),
         order: z.number(),
