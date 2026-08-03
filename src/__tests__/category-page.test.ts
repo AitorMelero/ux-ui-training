@@ -36,4 +36,22 @@ describe('category page', () => {
             }
         }
     });
+
+    test.each(categories)('marks the "%s" sidebar link as the active one', async (category) => {
+        const paths = await getStaticPaths();
+        const path = paths.find((entry) => entry.params.category === category);
+        expect(path).toBeDefined();
+        if (!path) return;
+
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(CategoryPage, { props: path.props });
+
+        expect(result).toContain(`href="/${category}" aria-current="page"`);
+        expect(result).not.toContain('href="/" aria-current="page"');
+
+        const otherCategory = categories.find((entry) => entry !== category);
+        if (otherCategory) {
+            expect(result).not.toContain(`aria-current="page">${categoryLabels[otherCategory]}`);
+        }
+    });
 });

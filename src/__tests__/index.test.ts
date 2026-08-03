@@ -71,6 +71,17 @@ describe('index page', () => {
         expect(result).toContain('lesson-level--beginner');
     });
 
+    test('renders a category sidebar with "Todo" active and links to every category', async () => {
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(IndexPage);
+
+        expect(result).toMatch(/<a href="\/" aria-current="page"[^>]*>Todo<\/a>/);
+        expect(result).toMatch(/<a href="\/ux"[^>]*>Experiencia de Usuario \(UX\)<\/a>/);
+        expect(result).toMatch(/<a href="\/ui"[^>]*>Interfaz de Usuario \(UI\)<\/a>/);
+        expect(result).not.toContain('aria-current="page">Experiencia de Usuario (UX)');
+        expect(result).not.toContain('aria-current="page">Interfaz de Usuario (UI)');
+    });
+
     test('covers a beginner-to-advanced curriculum with a substantial number of lessons', async () => {
         const lessons = await getCollection('lessons');
 

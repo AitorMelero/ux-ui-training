@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 
 import LessonCategorySection from '../components/LessonCategorySection.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import SidebarLayout from '../layouts/SidebarLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 
 type Lesson = CollectionEntry<'lessons'>;
@@ -16,8 +16,11 @@ const uxLessons: Lesson[] = byCategory('ux');
 const uiLessons: Lesson[] = byCategory('ui');
 ---
 
-<BaseLayout title="Aprende UX/UI" description="Lecciones interactivas de diseño UX y UI para dar tus primeros pasos.">
-    <main class="home">
+<SidebarLayout
+    title="Aprende UX/UI"
+    description="Lecciones interactivas de diseño UX y UI para dar tus primeros pasos."
+>
+    <main>
         <header class="home-header">
             <h1>Aprende UX/UI</h1>
             <p>Lecciones breves de teoría con ejercicios prácticos para reforzar lo aprendido.</p>
@@ -26,15 +29,9 @@ const uiLessons: Lesson[] = byCategory('ui');
         <LessonCategorySection category="ux" lessons={uxLessons} />
         <LessonCategorySection category="ui" lessons={uiLessons} />
     </main>
-</BaseLayout>
+</SidebarLayout>
 
 <style>
-    .home {
-        max-width: 64rem;
-        margin: 0 auto;
-        padding: 2rem 1.25rem 4rem;
-    }
-
     .home-header h1 {
         margin-block-end: 0.5rem;
     }
