@@ -9,7 +9,7 @@ interface Props {
 const { lesson } = Astro.props;
 ---
 
-<li class="lesson-card" data-lesson-slug={lesson.id}>
+<li class="lesson-card" data-lesson-slug={lesson.id} data-subcategory={lesson.data.subcategory}>
     <a href={`/lessons/${lesson.id}`}>
         <span class="lesson-order">Lección {lesson.data.order}</span>
         <span class={`lesson-level lesson-level--${lesson.data.level}`}>{levelLabels[lesson.data.level]}</span>

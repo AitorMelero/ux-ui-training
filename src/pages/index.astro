@@ -4,17 +4,14 @@ import { getCollection } from 'astro:content';
 import LessonCategorySection from '../components/LessonCategorySection.astro';
 import LessonFilters from '../components/LessonFilters.astro';
 import SidebarLayout from '../layouts/SidebarLayout.astro';
-import type { CollectionEntry } from 'astro:content';
-
-type Lesson = CollectionEntry<'lessons'>;
+import { categories } from '../lib/categories';
 
 const lessons = await getCollection('lessons');
 
-const byCategory = (category: 'ux' | 'ui') =>
+const byCategory = (category: (typeof categories)[number]) =>
     lessons.filter((lesson) => lesson.data.category === category).sort((a, b) => a.data.order - b.data.order);
 
-const uxLessons: Lesson[] = byCategory('ux');
-const uiLessons: Lesson[] = byCategory('ui');
+const sections = categories.map((category) => ({ category, lessons: byCategory(category) }));
 ---
 
 <SidebarLayout
@@ -29,8 +26,11 @@ const uiLessons: Lesson[] = byCategory('ui');
 
         <LessonFilters />
 
-        <LessonCategorySection category="ux" lessons={uxLessons} />
-        <LessonCategorySection category="ui" lessons={uiLessons} />
+        {
+            sections.map(({ category, lessons: categoryLessons }) => (
+                <LessonCategorySection category={category} lessons={categoryLessons} />
+            ))
+        }
     </main>
 </SidebarLayout>
 

@@ -1,5 +1,12 @@
 ---
 import { levelLabels, levels } from '../lib/levels';
+import type { ElementSubcategory } from '../lib/elementSubcategories';
+
+interface Props {
+    subcategories?: { key: ElementSubcategory; label: string }[];
+}
+
+const { subcategories = [] } = Astro.props;
 ---
 
 <div class="lesson-filters">
@@ -29,6 +36,34 @@ import { levelLabels, levels } from '../lib/levels';
             }
         </div>
     </div>
+
+    {
+        subcategories.length > 0 && (
+            <div class="lesson-subcategory-filter" role="group" aria-label="Filtrar por tipo de elemento">
+                <span class="lesson-filters-label">Filtrar por tipo</span>
+                <div class="lesson-subcategory-filter-options">
+                    <button
+                        type="button"
+                        class="lesson-subcategory-filter-button"
+                        data-subcategory="all"
+                        aria-pressed="true"
+                    >
+                        Todos
+                    </button>
+                    {subcategories.map(({ key, label }) => (
+                        <button
+                            type="button"
+                            class="lesson-subcategory-filter-button"
+                            data-subcategory={key}
+                            aria-pressed="false"
+                        >
+                            {label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+        )
+    }
 
     <p class="lesson-filters-empty" hidden>No se encontraron lecciones con esos filtros.</p>
 </div>
@@ -68,13 +103,15 @@ import { levelLabels, levels } from '../lib/levels';
         border-color: #364fc7;
     }
 
-    .lesson-level-filter-options {
+    .lesson-level-filter-options,
+    .lesson-subcategory-filter-options {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
     }
 
-    .lesson-level-filter-button {
+    .lesson-level-filter-button,
+    .lesson-subcategory-filter-button {
         padding: 0.45rem 0.9rem;
         font-size: 0.85rem;
         font-weight: 600;
@@ -85,16 +122,19 @@ import { levelLabels, levels } from '../lib/levels';
         cursor: pointer;
     }
 
-    .lesson-level-filter-button:hover {
+    .lesson-level-filter-button:hover,
+    .lesson-subcategory-filter-button:hover {
         border-color: #364fc7;
     }
 
-    .lesson-level-filter-button:focus-visible {
+    .lesson-level-filter-button:focus-visible,
+    .lesson-subcategory-filter-button:focus-visible {
         outline: 2px solid #364fc7;
         outline-offset: 1px;
     }
 
-    .lesson-level-filter-button[aria-pressed='true'] {
+    .lesson-level-filter-button[aria-pressed='true'],
+    .lesson-subcategory-filter-button[aria-pressed='true'] {
         background: #364fc7;
         border-color: #364fc7;
         color: #fff;
@@ -112,9 +152,11 @@ import { levelLabels, levels } from '../lib/levels';
 
     const searchInput = document.querySelector<HTMLInputElement>('#lesson-search-input');
     const levelButtons = document.querySelectorAll<HTMLButtonElement>('.lesson-level-filter-button');
+    const subcategoryButtons = document.querySelectorAll<HTMLButtonElement>('.lesson-subcategory-filter-button');
     const emptyMessage = document.querySelector<HTMLElement>('.lesson-filters-empty');
 
     let selectedLevel = 'all';
+    let selectedSubcategory = 'all';
 
     function applyFilters(): void {
         const query = searchInput?.value ?? '';
@@ -126,7 +168,9 @@ import { levelLabels, levels } from '../lib/levels';
 
             levelGroup.querySelectorAll<HTMLElement>('.lesson-card').forEach((card) => {
                 const title = card.querySelector('h3')?.textContent ?? '';
-                const visible = matchesLevel && matchesSearch(title, query);
+                const matchesSubcategory =
+                    selectedSubcategory === 'all' || card.dataset.subcategory === selectedSubcategory;
+                const visible = matchesLevel && matchesSubcategory && matchesSearch(title, query);
                 card.hidden = !visible;
                 if (visible) groupHasVisibleLesson = true;
             });
@@ -151,6 +195,14 @@ import { levelLabels, levels } from '../lib/levels';
         button.addEventListener('click', () => {
             selectedLevel = button.dataset.level ?? 'all';
             levelButtons.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+            applyFilters();
+        });
+    });
+
+    subcategoryButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            selectedSubcategory = button.dataset.subcategory ?? 'all';
+            subcategoryButtons.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
             applyFilters();
         });
     });
