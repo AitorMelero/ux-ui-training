@@ -1,0 +1,88 @@
+---
+
+---
+
+<div class="lesson-search">
+    <label for="lesson-search-input" class="lesson-search-label">Buscar lecciones</label>
+    <input
+        type="search"
+        id="lesson-search-input"
+        class="lesson-search-input"
+        placeholder="Busca una lección por su nombre..."
+        autocomplete="off"
+    />
+    <p class="lesson-search-empty" hidden>No se encontraron lecciones con ese nombre.</p>
+</div>
+
+<style>
+    .lesson-search {
+        margin-block-end: 1.5rem;
+    }
+
+    .lesson-search-label {
+        display: block;
+        margin-block-end: 0.35rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        color: #495057;
+    }
+
+    .lesson-search-input {
+        width: 100%;
+        max-width: 24rem;
+        padding: 0.6rem 0.9rem;
+        font-size: 0.95rem;
+        border: 1px solid #d8dbe3;
+        border-radius: 0.5rem;
+        background: #fff;
+        color: inherit;
+    }
+
+    .lesson-search-input:focus-visible {
+        outline: 2px solid #364fc7;
+        outline-offset: 1px;
+        border-color: #364fc7;
+    }
+
+    .lesson-search-empty {
+        margin-block-start: 1rem;
+        color: #495057;
+    }
+</style>
+
+<script>
+    import { matchesSearch } from '../lib/lessonSearch';
+
+    const input = document.querySelector<HTMLInputElement>('#lesson-search-input');
+    const emptyMessage = document.querySelector<HTMLElement>('.lesson-search-empty');
+
+    function filterLessons(query: string): void {
+        let anyLessonVisible = false;
+
+        document.querySelectorAll<HTMLElement>('.level-group').forEach((levelGroup) => {
+            let groupHasVisibleLesson = false;
+
+            levelGroup.querySelectorAll<HTMLElement>('.lesson-card').forEach((card) => {
+                const title = card.querySelector('h3')?.textContent ?? '';
+                const visible = matchesSearch(title, query);
+                card.hidden = !visible;
+                if (visible) groupHasVisibleLesson = true;
+            });
+
+            levelGroup.hidden = !groupHasVisibleLesson;
+            if (groupHasVisibleLesson) anyLessonVisible = true;
+        });
+
+        document.querySelectorAll<HTMLElement>('.lesson-group').forEach((lessonGroup) => {
+            const hasVisibleLevelGroup = Array.from(lessonGroup.querySelectorAll<HTMLElement>('.level-group')).some(
+                (levelGroup) => !levelGroup.hidden,
+            );
+            lessonGroup.hidden = !hasVisibleLevelGroup;
+        });
+
+        if (emptyMessage) emptyMessage.hidden = anyLessonVisible;
+    }
+
+    input?.addEventListener('input', () => filterLessons(input.value));
+</script>
