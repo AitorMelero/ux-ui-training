@@ -5,6 +5,7 @@ import LessonCategorySection from '../components/LessonCategorySection.astro';
 import LessonFilters from '../components/LessonFilters.astro';
 import SidebarLayout from '../layouts/SidebarLayout.astro';
 import { categories, categoryLabels } from '../lib/categories';
+import { elementSubcategories, elementSubcategoryLabels } from '../lib/elementSubcategories';
 import type { InferGetStaticPropsType } from 'astro';
 
 export async function getStaticPaths() {
@@ -25,6 +26,9 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { category, lessons } = Astro.props as Props;
 const label = categoryLabels[category];
+
+const subcategories =
+    category === 'components' ? elementSubcategories.map((key) => ({ key, label: elementSubcategoryLabels[key] })) : [];
 ---
 
 <SidebarLayout
@@ -33,7 +37,7 @@ const label = categoryLabels[category];
     activeCategory={category}
 >
     <main>
-        <LessonFilters />
+        <LessonFilters subcategories={subcategories} />
         <LessonCategorySection category={category} lessons={lessons} headingLevel="h1" />
     </main>
 </SidebarLayout>

@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, test } from 'vitest';
 
+import { categories, categoryLabels } from '../lib/categories';
 import { levelLabels, levels } from '../lib/levels';
 import IndexPage from '../pages/index.astro';
 
@@ -27,12 +28,13 @@ describe('index page', () => {
         }
     });
 
-    test('renders both the UX and UI section headings', async () => {
+    test('renders a section heading for every category', async () => {
         const container = await AstroContainer.create();
         const result = await container.renderToString(IndexPage);
 
-        expect(result).toContain('Experiencia de Usuario (UX)');
-        expect(result).toContain('Interfaz de Usuario (UI)');
+        for (const category of categories) {
+            expect(result).toContain(categoryLabels[category]);
+        }
     });
 
     test('marks up every lesson card with its slug and a hidden completed indicator', async () => {
@@ -70,11 +72,14 @@ describe('index page', () => {
         const container = await AstroContainer.create();
         const result = await container.renderToString(IndexPage);
 
+        const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
         expect(result).toMatch(/<a href="\/" aria-current="page"[^>]*>Todo<\/a>/);
-        expect(result).toMatch(/<a href="\/ux"[^>]*>Experiencia de Usuario \(UX\)<\/a>/);
-        expect(result).toMatch(/<a href="\/ui"[^>]*>Interfaz de Usuario \(UI\)<\/a>/);
-        expect(result).not.toContain('aria-current="page">Experiencia de Usuario (UX)');
-        expect(result).not.toContain('aria-current="page">Interfaz de Usuario (UI)');
+        for (const category of categories) {
+            const label = escapeRegExp(categoryLabels[category]);
+            expect(result).toMatch(new RegExp(`<a href="/${category}"[^>]*>${label}</a>`));
+            expect(result).not.toContain(`aria-current="page">${categoryLabels[category]}`);
+        }
     });
 
     test('renders a lesson search box to filter across all lessons', async () => {
