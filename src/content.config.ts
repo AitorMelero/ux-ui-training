@@ -44,6 +44,7 @@ const lessons = defineCollection({
         title: z.string(),
         description: z.string(),
         category: z.enum(['ux', 'ui']),
+        level: z.enum(['beginner', 'intermediate', 'advanced']).default('beginner'),
         order: z.number(),
         exercises: z.array(exerciseSchema).default([]),
     }),

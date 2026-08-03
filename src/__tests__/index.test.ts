@@ -43,4 +43,31 @@ describe('index page', () => {
         expect(result).toContain('lesson-completed-badge');
         expect(result).toMatch(/<span class="lesson-completed-badge" hidden[ >]/);
     });
+
+    test('groups lessons by level within each category and shows a level badge per lesson', async () => {
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(IndexPage);
+        const lessons = await getCollection('lessons');
+
+        const levelLabels: Record<(typeof lessons)[number]['data']['level'], string> = {
+            beginner: 'Principiante',
+            intermediate: 'Intermedio',
+            advanced: 'Avanzado',
+        };
+
+        const levelsPresent = new Set(lessons.map((lesson) => lesson.data.level));
+        for (const level of levelsPresent) {
+            expect(result).toContain(levelLabels[level]);
+        }
+        expect(result).toContain('lesson-level--beginner');
+    });
+
+    test('covers a beginner-to-advanced curriculum with a substantial number of lessons', async () => {
+        const lessons = await getCollection('lessons');
+
+        expect(lessons.length).toBeGreaterThanOrEqual(20);
+        expect(lessons.some((lesson) => lesson.data.level === 'beginner')).toBe(true);
+        expect(lessons.some((lesson) => lesson.data.level === 'intermediate')).toBe(true);
+        expect(lessons.some((lesson) => lesson.data.level === 'advanced')).toBe(true);
+    });
 });

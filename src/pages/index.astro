@@ -3,11 +3,25 @@ import { getCollection } from 'astro:content';
 
 import LessonCard from '../components/LessonCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+type Lesson = CollectionEntry<'lessons'>;
+type Level = Lesson['data']['level'];
 
 const lessons = await getCollection('lessons');
 
+const levelOrder: Level[] = ['beginner', 'intermediate', 'advanced'];
+const levelLabels: Record<Level, string> = {
+    beginner: 'Principiante',
+    intermediate: 'Intermedio',
+    advanced: 'Avanzado',
+};
+
 const byCategory = (category: 'ux' | 'ui') =>
     lessons.filter((lesson) => lesson.data.category === category).sort((a, b) => a.data.order - b.data.order);
+
+const byLevel = (categoryLessons: Lesson[], level: Level) =>
+    categoryLessons.filter((lesson) => lesson.data.level === level);
 
 const uxLessons = byCategory('ux');
 const uiLessons = byCategory('ui');
@@ -22,16 +36,44 @@ const uiLessons = byCategory('ui');
 
         <section class="lesson-group" aria-labelledby="ux-heading">
             <h2 id="ux-heading">Experiencia de Usuario (UX)</h2>
-            <ul class="lesson-grid">
-                {uxLessons.map((lesson) => <LessonCard lesson={lesson} />)}
-            </ul>
+            {
+                levelOrder.map((level) => {
+                    const levelLessons = byLevel(uxLessons, level);
+                    return (
+                        levelLessons.length > 0 && (
+                            <div class="level-group">
+                                <h3 class="level-heading">{levelLabels[level]}</h3>
+                                <ul class="lesson-grid">
+                                    {levelLessons.map((lesson) => (
+                                        <LessonCard lesson={lesson} />
+                                    ))}
+                                </ul>
+                            </div>
+                        )
+                    );
+                })
+            }
         </section>
 
         <section class="lesson-group" aria-labelledby="ui-heading">
             <h2 id="ui-heading">Interfaz de Usuario (UI)</h2>
-            <ul class="lesson-grid">
-                {uiLessons.map((lesson) => <LessonCard lesson={lesson} />)}
-            </ul>
+            {
+                levelOrder.map((level) => {
+                    const levelLessons = byLevel(uiLessons, level);
+                    return (
+                        levelLessons.length > 0 && (
+                            <div class="level-group">
+                                <h3 class="level-heading">{levelLabels[level]}</h3>
+                                <ul class="lesson-grid">
+                                    {levelLessons.map((lesson) => (
+                                        <LessonCard lesson={lesson} />
+                                    ))}
+                                </ul>
+                            </div>
+                        )
+                    );
+                })
+            }
         </section>
     </main>
 </BaseLayout>
@@ -54,6 +96,23 @@ const uiLessons = byCategory('ui');
 
     .lesson-group {
         margin-block-start: 2.5rem;
+    }
+
+    .level-group {
+        margin-block-start: 1.75rem;
+    }
+
+    .level-group:first-of-type {
+        margin-block-start: 1rem;
+    }
+
+    .level-heading {
+        margin: 0 0 0.75rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #495057;
     }
 
     .lesson-grid {

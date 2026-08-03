@@ -2,7 +2,8 @@
 title: 'Sistemas de diseño y componentes'
 description: 'Comprende qué es un design system, por qué se organiza en componentes reutilizables y cómo escala el trabajo de un equipo.'
 category: ui
-order: 3
+level: intermediate
+order: 5
 exercises:
     - id: sistemas-mc-1
       type: multiple-choice
@@ -58,6 +59,44 @@ Cuando un producto crece, y sobre todo cuando lo trabaja más de una persona, re
 ## Componentes: los bloques reutilizables
 
 La pieza central de cualquier sistema de diseño es el **componente**: un elemento de interfaz autocontenido —un botón, un campo de texto, una tarjeta, un menú desplegable— que se diseña y documenta una única vez, con todas sus variantes (tamaños, estados: normal, hover, deshabilitado, con error) y se reutiliza en todas las pantallas que lo necesiten. Una metodología muy citada para organizar estos componentes es **Atomic Design**, de Brad Frost, que toma prestada la metáfora de la química: los **átomos** son los elementos más básicos e indivisibles (un botón, una etiqueta), las **moléculas** combinan átomos en unidades funcionales simples (un campo de búsqueda es un input más un botón), y los **organismos** combinan moléculas en secciones completas de interfaz (una cabecera con logo, buscador y menú).
+
+Visto en una sola imagen, el recorrido de Atomic Design va de piezas mínimas a pantallas completas:
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;margin:1.25rem 0;">
+    <div style="text-align:center;">
+        <div style="width:28px;height:28px;border-radius:0.3rem;background:#364fc7;margin:0 auto;"></div>
+        <p style="margin:0.35rem 0 0;font-size:0.7rem;">Átomo</p>
+    </div>
+    <div style="font-size:1.25rem;color:#adb5bd;">→</div>
+    <div style="text-align:center;">
+        <div style="display:flex;gap:0.25rem;padding:0.35rem;border:1px dashed #adb5bd;border-radius:0.3rem;">
+            <div style="width:60px;height:22px;border-radius:0.25rem;background:#e9ecef;"></div>
+            <div style="width:22px;height:22px;border-radius:0.25rem;background:#364fc7;"></div>
+        </div>
+        <p style="margin:0.35rem 0 0;font-size:0.7rem;">Molécula</p>
+    </div>
+    <div style="font-size:1.25rem;color:#adb5bd;">→</div>
+    <div style="text-align:center;">
+        <div style="padding:0.5rem;border:1px dashed #adb5bd;border-radius:0.3rem;display:flex;flex-direction:column;gap:0.3rem;">
+            <div style="width:120px;height:14px;background:#364fc7;border-radius:0.2rem;"></div>
+            <div style="display:flex;gap:0.25rem;">
+                <div style="width:40px;height:16px;background:#e9ecef;"></div>
+                <div style="width:40px;height:16px;background:#e9ecef;"></div>
+                <div style="width:40px;height:16px;background:#e9ecef;"></div>
+            </div>
+        </div>
+        <p style="margin:0.35rem 0 0;font-size:0.7rem;">Organismo</p>
+    </div>
+    <div style="font-size:1.25rem;color:#adb5bd;">→</div>
+    <div style="text-align:center;">
+        <div style="width:90px;height:64px;border:1px dashed #adb5bd;border-radius:0.3rem;background:#f8f9fa;"></div>
+        <p style="margin:0.35rem 0 0;font-size:0.7rem;">Página</p>
+    </div>
+</div>
+
+## Gobernanza: quién mantiene el sistema
+
+Un sistema de diseño no se termina el día que se publica: necesita gobernanza, es decir, reglas claras sobre quién puede proponer un componente nuevo, quién lo aprueba y cómo se comunican los cambios (sobre todo los que rompen compatibilidad) a los equipos que ya lo usan. Sin gobernanza, un sistema de diseño tiende a fragmentarse en variantes "casi iguales pero no exactamente", que es justo el problema que debía resolver. Los equipos que escalan bien suelen tener un canal claro para proponer cambios, un proceso de revisión (a menudo compartido entre una persona de diseño y una de desarrollo) y un registro de qué versión del sistema usa cada producto, similar a como se versiona cualquier librería de software.
 
 ## El sistema de diseño como lenguaje común
 
