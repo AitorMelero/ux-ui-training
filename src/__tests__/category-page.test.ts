@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { describe, expect, test } from 'vitest';
 
 import { categories, categoryLabels } from '../lib/categories';
+import { levelLabels, levels } from '../lib/levels';
 import CategoryPage, { getStaticPaths } from '../pages/[category].astro';
 
 describe('category page', () => {
@@ -66,5 +67,21 @@ describe('category page', () => {
 
         expect(result).toContain('id="lesson-search-input"');
         expect(result).toContain('type="search"');
+    });
+
+    test.each(categories)('renders a level filter with all levels on the "%s" category page', async (category) => {
+        const paths = await getStaticPaths();
+        const path = paths.find((entry) => entry.params.category === category);
+        expect(path).toBeDefined();
+        if (!path) return;
+
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(CategoryPage, { props: path.props });
+
+        expect(result).toContain('data-level="all"');
+        for (const level of levels) {
+            expect(result).toContain(`data-level="${level}"`);
+            expect(result).toContain(levelLabels[level]);
+        }
     });
 });

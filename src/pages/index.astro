@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 
 import LessonCategorySection from '../components/LessonCategorySection.astro';
-import LessonSearch from '../components/LessonSearch.astro';
+import LessonFilters from '../components/LessonFilters.astro';
 import SidebarLayout from '../layouts/SidebarLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 
@@ -27,7 +27,7 @@ const uiLessons: Lesson[] = byCategory('ui');
             <p>Lecciones breves de teoría con ejercicios prácticos para reforzar lo aprendido.</p>
         </header>
 
-        <LessonSearch />
+        <LessonFilters />
 
         <LessonCategorySection category="ux" lessons={uxLessons} />
         <LessonCategorySection category="ui" lessons={uiLessons} />

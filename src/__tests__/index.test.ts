@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, test } from 'vitest';
 
+import { levelLabels, levels } from '../lib/levels';
 import IndexPage from '../pages/index.astro';
 
 describe('index page', () => {
@@ -58,12 +59,6 @@ describe('index page', () => {
         const result = await container.renderToString(IndexPage);
         const lessons = await getCollection('lessons');
 
-        const levelLabels: Record<(typeof lessons)[number]['data']['level'], string> = {
-            beginner: 'Principiante',
-            intermediate: 'Intermedio',
-            advanced: 'Avanzado',
-        };
-
         const levelsPresent = new Set(lessons.map((lesson) => lesson.data.level));
         for (const level of levelsPresent) {
             expect(result).toContain(levelLabels[level]);
@@ -88,6 +83,17 @@ describe('index page', () => {
 
         expect(result).toContain('id="lesson-search-input"');
         expect(result).toContain('type="search"');
+    });
+
+    test('renders a level filter with all levels', async () => {
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(IndexPage);
+
+        expect(result).toContain('data-level="all"');
+        for (const level of levels) {
+            expect(result).toContain(`data-level="${level}"`);
+            expect(result).toContain(levelLabels[level]);
+        }
     });
 
     test('covers a beginner-to-advanced curriculum with a substantial number of lessons', async () => {

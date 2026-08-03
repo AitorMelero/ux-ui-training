@@ -1,4 +1,5 @@
 ---
+import { levelLabels } from '../lib/levels';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -6,12 +7,6 @@ interface Props {
 }
 
 const { lesson } = Astro.props;
-
-const levelLabels: Record<CollectionEntry<'lessons'>['data']['level'], string> = {
-    beginner: 'Principiante',
-    intermediate: 'Intermedio',
-    advanced: 'Avanzado',
-};
 ---
 
 <li class="lesson-card" data-lesson-slug={lesson.id}>
