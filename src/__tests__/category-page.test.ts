@@ -54,4 +54,17 @@ describe('category page', () => {
             expect(result).not.toContain(`aria-current="page">${categoryLabels[otherCategory]}`);
         }
     });
+
+    test.each(categories)('renders a lesson search box on the "%s" category page', async (category) => {
+        const paths = await getStaticPaths();
+        const path = paths.find((entry) => entry.params.category === category);
+        expect(path).toBeDefined();
+        if (!path) return;
+
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(CategoryPage, { props: path.props });
+
+        expect(result).toContain('id="lesson-search-input"');
+        expect(result).toContain('type="search"');
+    });
 });

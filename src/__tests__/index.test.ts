@@ -82,6 +82,14 @@ describe('index page', () => {
         expect(result).not.toContain('aria-current="page">Interfaz de Usuario (UI)');
     });
 
+    test('renders a lesson search box to filter across all lessons', async () => {
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(IndexPage);
+
+        expect(result).toContain('id="lesson-search-input"');
+        expect(result).toContain('type="search"');
+    });
+
     test('covers a beginner-to-advanced curriculum with a substantial number of lessons', async () => {
         const lessons = await getCollection('lessons');
 
