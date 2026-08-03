@@ -8,9 +8,10 @@ interface Props {
 const { lesson } = Astro.props;
 ---
 
-<li class="lesson-card">
+<li class="lesson-card" data-lesson-slug={lesson.id}>
     <a href={`/lessons/${lesson.id}`}>
         <span class="lesson-order">Lección {lesson.data.order}</span>
+        <span class="lesson-completed-badge" hidden>✓ Completada</span>
         <h3>{lesson.data.title}</h3>
         <p>{lesson.data.description}</p>
     </a>
@@ -61,4 +62,34 @@ const { lesson } = Astro.props;
         color: #495057;
         font-size: 0.95rem;
     }
+
+    .lesson-completed-badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: #2f9e44;
+        margin: 0 0 0.35rem;
+    }
+
+    .lesson-card.is-completed a {
+        border-color: #2f9e44;
+        background: #ebfbee;
+    }
 </style>
+
+<script>
+    import { isLessonCompleted } from '../lib/progress';
+
+    function initLessonCard(card: HTMLElement): void {
+        const lessonSlug = card.dataset.lessonSlug;
+        const badge = card.querySelector<HTMLElement>('.lesson-completed-badge');
+        if (!lessonSlug || !badge) return;
+
+        const completed = isLessonCompleted(lessonSlug);
+        badge.hidden = !completed;
+        card.classList.toggle('is-completed', completed);
+    }
+
+    document.querySelectorAll<HTMLElement>('.lesson-card[data-lesson-slug]').forEach(initLessonCard);
+</script>

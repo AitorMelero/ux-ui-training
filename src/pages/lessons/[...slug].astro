@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 
 import ExerciseList from '../../components/ExerciseList.astro';
+import LessonCompletionToggle from '../../components/LessonCompletionToggle.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import type { InferGetStaticPropsType } from 'astro';
 
@@ -30,7 +31,8 @@ const categoryLabel = lesson.data.category === 'ux' ? 'Experiencia de Usuario' :
         <div class="lesson-theory">
             <Content />
         </div>
-        <ExerciseList exercises={lesson.data.exercises} />
+        <LessonCompletionToggle lessonSlug={lesson.id} />
+        <ExerciseList exercises={lesson.data.exercises} lessonSlug={lesson.id} />
     </main>
 </BaseLayout>
 
