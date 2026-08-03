@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 
 import LessonCategorySection from '../components/LessonCategorySection.astro';
-import LessonSearch from '../components/LessonSearch.astro';
+import LessonFilters from '../components/LessonFilters.astro';
 import SidebarLayout from '../layouts/SidebarLayout.astro';
 import { categories, categoryLabels } from '../lib/categories';
 import type { InferGetStaticPropsType } from 'astro';
@@ -33,7 +33,7 @@ const label = categoryLabels[category];
     activeCategory={category}
 >
     <main>
-        <LessonSearch />
+        <LessonFilters />
         <LessonCategorySection category={category} lessons={lessons} headingLevel="h1" />
     </main>
 </SidebarLayout>
