@@ -1,5 +1,7 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { getCollection } from 'astro:content';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, test } from 'vitest';
 
 import IndexPage from '../pages/index.astro';
@@ -42,6 +44,13 @@ describe('index page', () => {
         }
         expect(result).toContain('lesson-completed-badge');
         expect(result).toMatch(/<span class="lesson-completed-badge" hidden[ >]/);
+    });
+
+    test('hides the completed badge with CSS even before the client script runs, so a new visitor never sees it', () => {
+        const componentPath = fileURLToPath(new URL('../components/LessonCard.astro', import.meta.url));
+        const source = readFileSync(componentPath, 'utf-8');
+
+        expect(source).toMatch(/\.lesson-completed-badge\[hidden\]\s*{\s*display:\s*none;/);
     });
 
     test('groups lessons by level within each category and shows a level badge per lesson', async () => {
