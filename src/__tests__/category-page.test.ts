@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import { describe, expect, test } from 'vitest';
 
 import { categories, categoryLabels } from '../lib/categories';
-import { elementSubcategories, elementSubcategoryLabels } from '../lib/elementSubcategories';
+import { categorySubcategories } from '../lib/categorySubcategories';
 import { levelLabels, levels } from '../lib/levels';
 import CategoryPage, { getStaticPaths } from '../pages/[category].astro';
 
@@ -86,23 +86,26 @@ describe('category page', () => {
         }
     });
 
-    test('renders a subcategory filter with all element types on the "components" category page', async () => {
-        const paths = await getStaticPaths();
-        const path = paths.find((entry) => entry.params.category === 'components');
-        expect(path).toBeDefined();
-        if (!path) return;
+    test.each(Object.entries(categorySubcategories))(
+        'renders a subcategory filter with all element types on the "%s" category page',
+        async (category, subcategories) => {
+            const paths = await getStaticPaths();
+            const path = paths.find((entry) => entry.params.category === category);
+            expect(path).toBeDefined();
+            if (!path || !subcategories) return;
 
-        const container = await AstroContainer.create();
-        const result = await container.renderToString(CategoryPage, { props: path.props });
+            const container = await AstroContainer.create();
+            const result = await container.renderToString(CategoryPage, { props: path.props });
 
-        expect(result).toContain('data-subcategory="all"');
-        for (const subcategory of elementSubcategories) {
-            expect(result).toContain(`data-subcategory="${subcategory}"`);
-            expect(result).toContain(elementSubcategoryLabels[subcategory]);
-        }
-    });
+            expect(result).toContain('data-subcategory="all"');
+            for (const { key, label } of subcategories) {
+                expect(result).toContain(`data-subcategory="${key}"`);
+                expect(result).toContain(label);
+            }
+        },
+    );
 
-    test.each(categories.filter((category) => category !== 'components'))(
+    test.each(categories.filter((category) => !(category in categorySubcategories)))(
         'does not render a subcategory filter on the "%s" category page',
         async (category) => {
             const paths = await getStaticPaths();

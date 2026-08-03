@@ -1,9 +1,8 @@
 ---
 import { levelLabels, levels } from '../lib/levels';
-import type { ElementSubcategory } from '../lib/elementSubcategories';
 
 interface Props {
-    subcategories?: { key: ElementSubcategory; label: string }[];
+    subcategories?: { key: string; label: string }[];
 }
 
 const { subcategories = [] } = Astro.props;
