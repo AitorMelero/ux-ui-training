@@ -1,0 +1,65 @@
+---
+import { categories, categoryLabels } from '../lib/categories';
+import type { Category } from '../lib/categories';
+
+interface Props {
+    activeCategory?: Category;
+}
+
+const { activeCategory } = Astro.props;
+---
+
+<nav class="category-sidebar" aria-label="Categorías de lecciones">
+    <ul>
+        <li>
+            <a href="/" aria-current={activeCategory === undefined ? 'page' : undefined}>Todo</a>
+        </li>
+        {
+            categories.map((category) => (
+                <li>
+                    <a href={`/${category}`} aria-current={activeCategory === category ? 'page' : undefined}>
+                        {categoryLabels[category]}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</nav>
+
+<style>
+    .category-sidebar ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .category-sidebar a {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        color: #1c1f26;
+        text-decoration: none;
+        font-size: 0.95rem;
+    }
+
+    .category-sidebar a:hover {
+        background: #eef0f4;
+    }
+
+    .category-sidebar a[aria-current='page'] {
+        background: #364fc7;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+        .category-sidebar ul {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+    }
+</style>

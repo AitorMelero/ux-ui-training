@@ -1,0 +1,46 @@
+---
+import CategorySidebar from '../components/CategorySidebar.astro';
+import BaseLayout from './BaseLayout.astro';
+import type { Category } from '../lib/categories';
+
+interface Props {
+    title: string;
+    description?: string;
+    activeCategory?: Category;
+}
+
+const { title, description, activeCategory } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+    <div class="with-sidebar">
+        <CategorySidebar activeCategory={activeCategory} />
+        <div class="with-sidebar-content">
+            <slot />
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .with-sidebar {
+        display: grid;
+        grid-template-columns: 14rem 1fr;
+        align-items: start;
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 2rem 1.25rem;
+        gap: 2rem;
+    }
+
+    .with-sidebar-content {
+        min-width: 0;
+    }
+
+    @media (max-width: 640px) {
+        .with-sidebar {
+            grid-template-columns: 1fr;
+            padding: 1.25rem;
+            gap: 1.25rem;
+        }
+    }
+</style>
