@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content';
 import ExerciseList from '../../components/ExerciseList.astro';
 import LessonCompletionToggle from '../../components/LessonCompletionToggle.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { categoryShortLabels } from '../../lib/categories';
 import type { InferGetStaticPropsType } from 'astro';
 
 export async function getStaticPaths() {
@@ -19,7 +20,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { lesson } = Astro.props as Props;
 const { Content } = await render(lesson);
 
-const categoryLabel = lesson.data.category === 'ux' ? 'Experiencia de Usuario' : 'Interfaz de Usuario';
+const categoryLabel = categoryShortLabels[lesson.data.category];
 ---
 
 <BaseLayout title={lesson.data.title} description={lesson.data.description}>

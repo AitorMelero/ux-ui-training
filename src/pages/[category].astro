@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+
+import LessonCategorySection from '../components/LessonCategorySection.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { categories, categoryLabels } from '../lib/categories';
+import type { InferGetStaticPropsType } from 'astro';
+
+export async function getStaticPaths() {
+    const lessons = await getCollection('lessons');
+
+    return categories.map((category) => ({
+        params: { category },
+        props: {
+            category,
+            lessons: lessons
+                .filter((lesson) => lesson.data.category === category)
+                .sort((a, b) => a.data.order - b.data.order),
+        },
+    }));
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { category, lessons } = Astro.props as Props;
+const label = categoryLabels[category];
+---
+
+<BaseLayout title={`${label} · Aprende UX/UI`} description={`Lecciones de ${label} para dar tus primeros pasos.`}>
+    <main class="category">
+        <a class="back-link" href="/">← Volver a todas las lecciones</a>
+
+        <LessonCategorySection category={category} lessons={lessons} headingLevel="h1" />
+    </main>
+</BaseLayout>
+
+<style>
+    .category {
+        max-width: 64rem;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 4rem;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-block-end: 1.5rem;
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
