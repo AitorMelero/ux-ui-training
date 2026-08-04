@@ -1,102 +1,117 @@
-# 📦 mele-astro-template
+# 🎓 ux-ui-training
 
-Astro + TypeScript starter template with linting, formatting, and testing pre-configured.
+Plataforma de lecciones interactivas en español para aprender UX/UI, construida con [Astro](https://astro.build/) y TypeScript.
 
-Based on the same conventions as [mele-vite-react-typescript-template](https://github.com/AitorMelero/mele-vite-react-typescript-template), adapted for [Astro](https://astro.build/) instead of React.
-
----
-
-## 📑 Table of Contents
-
-- [📦 mele-astro-template](#-mele-astro-template)
-- [🧰 Tech Stack](#-tech-stack)
-- [📁 Project Structure](#-project-structure)
-- [⚙️ Installation](#️-installation)
-- [🧪 Available Scripts](#-available-scripts)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+Cada lección combina teoría con ejercicios interactivos (ordenar pasos, texto libre, opción múltiple) y guarda el progreso del alumno en el navegador.
 
 ---
 
-## 🧰 Tech Stack
+## 📑 Índice
 
-This project is built with:
+- [🎓 ux-ui-training](#-ux-ui-training)
+- [🧰 Tecnologías](#-tecnologías)
+- [📚 Categorías de lecciones](#-categorías-de-lecciones)
+- [📁 Estructura del proyecto](#-estructura-del-proyecto)
+- [⚙️ Instalación](#️-instalación)
+- [🧪 Scripts disponibles](#-scripts-disponibles)
+- [🤝 Contribuir](#-contribuir)
+
+---
+
+## 🧰 Tecnologías
+
+Este proyecto está construido con:
 
 - 🚀 Astro
 - 🟦 TypeScript
+- 📦 Astro Content Collections + Zod (contenido y ejercicios de las lecciones)
 - 🧪 Vitest
 
 ---
 
-## 📁 Project Structure
+## 📚 Categorías de lecciones
+
+Las lecciones (`src/content/lessons/`) se organizan en seis categorías, cada una con niveles (principiante, intermedio, avanzado) y subcategorías:
+
+- **UX** — Experiencia de Usuario
+- **UI** — Interfaz de Usuario
+- **Componentes** — Componentes de Interfaz
+- **Negocio** — Lógica de Negocio
+- **Proyectos** — Proyectos de Diseño UX/UI
+- **Empleo** — Búsqueda de Empleo
+
+Cada lección puede incluir ejercicios interactivos (ordenar, texto libre u opción múltiple) definidos en su frontmatter y validados con Zod.
+
+---
+
+## 📁 Estructura del proyecto
 
 ```
 src/
-│── __tests__/
-│── pages/
-│    └── index.astro
+│── __tests__/           # Tests (Vitest), agrupados aquí en lugar de junto al código fuente
+│── components/           # Componentes Astro reutilizables (tarjetas, filtros, sidebar...)
+│    └── exercises/       # Componentes de los tres tipos de ejercicio interactivo
+│── content/
+│    └── lessons/         # Contenido de las lecciones (Markdown + frontmatter)
+│── layouts/               # Layouts compartidos (base y con sidebar)
+│── lib/                   # Lógica de dominio: categorías, niveles, búsqueda, progreso...
+│── pages/                 # Rutas de la web (incluye rutas dinámicas por categoría y lección)
+│── scripts/               # Scripts de cliente, uno por componente interactivo
+│── styles/                # Estilos globales
+│── types/                 # Tipos compartidos
+│── content.config.ts      # Definición y validación (Zod) de la colección de lecciones
 public/
 ```
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Instalación
 
-Follow these steps to run the project locally:
+Sigue estos pasos para ejecutar el proyecto en local:
 
 ```bash
-# Clone the repository
-git clone <REPO_URL>
+# Clona el repositorio
+git clone git@github.com:AitorMelero/ux-ui-training.git
 
-# Navigate into the folder
-cd <PROJECT_NAME>
+# Entra en la carpeta
+cd ux-ui-training
 
-# Install dependencies
+# Instala las dependencias
 pnpm install
 ```
 
-This project targets the Node.js and pnpm versions pinned in `.nvmrc` and `package.json#packageManager`.
+Este proyecto usa las versiones de Node.js y pnpm fijadas en `.nvmrc` y `package.json#packageManager`.
 
 ---
 
-## 🧪 Available Scripts
+## 🧪 Scripts disponibles
 
-In the project directory, you can run:
+En el directorio del proyecto puedes ejecutar:
 
 ```bash
-pnpm dev                # Start development server
-pnpm build              # Type-check (astro check) and build for production
-pnpm preview            # Preview production build
-pnpm format:check       # Run Prettier to check format errors
-pnpm format:fix         # Run Prettier to fix format errors
-pnpm lint:js:check      # Run ESLint to check lint errors
-pnpm lint:js:fix        # Run ESLint to fix lint errors
-pnpm test               # Run tests
-pnpm test:coverage      # Run tests coverage
-pnpm test:ui            # Run tests interface
-pnpm check              # Run all formatters, linters and tests with coverage
+pnpm dev                # Inicia el servidor de desarrollo
+pnpm build              # Comprueba tipos (astro check) y compila para producción
+pnpm preview            # Previsualiza la build de producción
+pnpm format:check       # Ejecuta Prettier para comprobar errores de formato
+pnpm format:fix         # Ejecuta Prettier para corregir errores de formato
+pnpm lint:js:check      # Ejecuta ESLint para comprobar errores de lint
+pnpm lint:js:fix        # Ejecuta ESLint para corregir errores de lint
+pnpm test               # Ejecuta los tests
+pnpm test:coverage      # Ejecuta los tests con cobertura
+pnpm test:ui            # Ejecuta la interfaz de tests
+pnpm check              # Ejecuta formateadores, linters y tests con cobertura
 ```
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contribuir
 
-Contributions are welcome 🎉
+Las contribuciones son bienvenidas 🎉
 
-Steps:
+Pasos:
 
-1. Fork the project
-2. Create a branch (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -m 'Add new feature'`)
-4. Push to your branch (`git push origin feature/new-feature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-Specify the project license here.
-
-Example:
-
-MIT © Your Name
+1. Haz un fork del proyecto
+2. Crea una rama (`git checkout -b feature/new-feature`)
+3. Haz commit de tus cambios (`git commit -m 'Add new feature'`)
+4. Haz push a tu rama (`git push origin feature/new-feature`)
+5. Abre un Pull Request
