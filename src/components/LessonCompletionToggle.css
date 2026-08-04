@@ -1,0 +1,48 @@
+.completion-toggle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-block: 1.5rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid #d8dbe3;
+    border-radius: 0.75rem;
+    background: #fafbfc;
+}
+
+.completion-toggle.is-completed {
+    border-color: #2f9e44;
+    background: #ebfbee;
+}
+
+.completion-toggle-btn {
+    border: none;
+    border-radius: 0.5rem;
+    background: #364fc7;
+    color: #fff;
+    padding: 0.6rem 1.1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.completion-toggle-btn:hover {
+    background: #2f3ea3;
+}
+
+.completion-toggle.is-completed .completion-toggle-btn {
+    background: #2f9e44;
+}
+
+.completion-toggle.is-completed .completion-toggle-btn:hover {
+    background: #268a3b;
+}
+
+.completion-toggle-status {
+    margin: 0;
+    font-weight: 600;
+    color: #495057;
+}
+
+.completion-toggle.is-completed .completion-toggle-status {
+    color: #2f9e44;
+}

@@ -1,4 +1,6 @@
 ---
+import './index.css';
+
 import { getCollection } from 'astro:content';
 
 import LessonCategorySection from '../components/LessonCategorySection.astro';
@@ -33,14 +35,3 @@ const sections = categories.map((category) => ({ category, lessons: byCategory(c
         }
     </main>
 </SidebarLayout>
-
-<style>
-    .home-header h1 {
-        margin-block-end: 0.5rem;
-    }
-
-    .home-header p {
-        color: #495057;
-        max-width: 40rem;
-    }
-</style>

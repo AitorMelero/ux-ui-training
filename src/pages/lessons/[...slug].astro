@@ -1,4 +1,6 @@
 ---
+import './lesson-page.css';
+
 import { getCollection, render } from 'astro:content';
 
 import ExerciseList from '../../components/ExerciseList.astro';
@@ -36,64 +38,3 @@ const categoryLabel = categoryShortLabels[lesson.data.category];
         <ExerciseList exercises={lesson.data.exercises} lessonSlug={lesson.id} />
     </main>
 </BaseLayout>
-
-<style>
-    .lesson {
-        max-width: 42rem;
-        margin: 0 auto;
-        padding: 2rem 1.25rem 4rem;
-    }
-
-    .back-link {
-        display: inline-block;
-        margin-block-end: 1.5rem;
-        font-size: 0.9rem;
-        text-decoration: none;
-    }
-
-    .back-link:hover {
-        text-decoration: underline;
-    }
-
-    .lesson-category {
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        font-weight: 700;
-        letter-spacing: 0.05em;
-        color: #364fc7;
-        margin: 0;
-    }
-
-    .lesson h1 {
-        margin-block-start: 0.25rem;
-    }
-
-    .lesson-description {
-        color: #495057;
-        font-size: 1.05rem;
-    }
-
-    .lesson-theory {
-        line-height: 1.75;
-    }
-
-    .lesson-theory :global(h2) {
-        margin-block-start: 2rem;
-    }
-
-    .lesson-theory :global(p) {
-        margin-block: 1rem;
-    }
-
-    .lesson-theory :global(ul),
-    .lesson-theory :global(ol) {
-        padding-inline-start: 1.5rem;
-    }
-
-    .lesson-theory :global(code) {
-        background: #eef0f4;
-        padding: 0.1rem 0.35rem;
-        border-radius: 0.3rem;
-        font-size: 0.9em;
-    }
-</style>

@@ -1,4 +1,6 @@
 ---
+import './SidebarLayout.css';
+
 import CategorySidebar from '../components/CategorySidebar.astro';
 import BaseLayout from './BaseLayout.astro';
 import type { Category } from '../lib/categories';
@@ -20,27 +22,3 @@ const { title, description, activeCategory } = Astro.props;
         </div>
     </div>
 </BaseLayout>
-
-<style>
-    .with-sidebar {
-        display: grid;
-        grid-template-columns: 14rem 1fr;
-        align-items: start;
-        max-width: 96rem;
-        margin: 0 auto;
-        padding: 2rem 2.5rem;
-        gap: 2.5rem;
-    }
-
-    .with-sidebar-content {
-        min-width: 0;
-    }
-
-    @media (max-width: 640px) {
-        .with-sidebar {
-            grid-template-columns: 1fr;
-            padding: 1.25rem;
-            gap: 1.25rem;
-        }
-    }
-</style>

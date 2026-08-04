@@ -1,0 +1,28 @@
+.lesson-group {
+    margin-block-start: 2.5rem;
+}
+
+.level-group {
+    margin-block-start: 1.75rem;
+}
+
+.level-group:first-of-type {
+    margin-block-start: 1rem;
+}
+
+.level-heading {
+    margin: 0 0 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #495057;
+}
+
+.lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 0;
+    padding: 0;
+}
