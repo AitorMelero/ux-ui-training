@@ -6,22 +6,21 @@ Cada lección combina teoría con ejercicios interactivos (ordenar pasos, texto 
 
 ---
 
-## 📑 Table of Contents
+## 📑 Índice
 
 - [🎓 ux-ui-training](#-ux-ui-training)
-- [🧰 Tech Stack](#-tech-stack)
+- [🧰 Tecnologías](#-tecnologías)
 - [📚 Categorías de lecciones](#-categorías-de-lecciones)
-- [📁 Project Structure](#-project-structure)
-- [⚙️ Installation](#️-installation)
-- [🧪 Available Scripts](#-available-scripts)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+- [📁 Estructura del proyecto](#-estructura-del-proyecto)
+- [⚙️ Instalación](#️-instalación)
+- [🧪 Scripts disponibles](#-scripts-disponibles)
+- [🤝 Contribuir](#-contribuir)
 
 ---
 
-## 🧰 Tech Stack
+## 🧰 Tecnologías
 
-This project is built with:
+Este proyecto está construido con:
 
 - 🚀 Astro
 - 🟦 TypeScript
@@ -45,7 +44,7 @@ Cada lección puede incluir ejercicios interactivos (ordenar, texto libre u opci
 
 ---
 
-## 📁 Project Structure
+## 📁 Estructura del proyecto
 
 ```
 src/
@@ -66,63 +65,53 @@ public/
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Instalación
 
-Follow these steps to run the project locally:
+Sigue estos pasos para ejecutar el proyecto en local:
 
 ```bash
-# Clone the repository
+# Clona el repositorio
 git clone git@github.com:AitorMelero/ux-ui-training.git
 
-# Navigate into the folder
+# Entra en la carpeta
 cd ux-ui-training
 
-# Install dependencies
+# Instala las dependencias
 pnpm install
 ```
 
-This project targets the Node.js and pnpm versions pinned in `.nvmrc` and `package.json#packageManager`.
+Este proyecto usa las versiones de Node.js y pnpm fijadas en `.nvmrc` y `package.json#packageManager`.
 
 ---
 
-## 🧪 Available Scripts
+## 🧪 Scripts disponibles
 
-In the project directory, you can run:
+En el directorio del proyecto puedes ejecutar:
 
 ```bash
-pnpm dev                # Start development server
-pnpm build              # Type-check (astro check) and build for production
-pnpm preview            # Preview production build
-pnpm format:check       # Run Prettier to check format errors
-pnpm format:fix         # Run Prettier to fix format errors
-pnpm lint:js:check      # Run ESLint to check lint errors
-pnpm lint:js:fix        # Run ESLint to fix lint errors
-pnpm test               # Run tests
-pnpm test:coverage      # Run tests coverage
-pnpm test:ui            # Run tests interface
-pnpm check              # Run all formatters, linters and tests with coverage
+pnpm dev                # Inicia el servidor de desarrollo
+pnpm build              # Comprueba tipos (astro check) y compila para producción
+pnpm preview            # Previsualiza la build de producción
+pnpm format:check       # Ejecuta Prettier para comprobar errores de formato
+pnpm format:fix         # Ejecuta Prettier para corregir errores de formato
+pnpm lint:js:check      # Ejecuta ESLint para comprobar errores de lint
+pnpm lint:js:fix        # Ejecuta ESLint para corregir errores de lint
+pnpm test               # Ejecuta los tests
+pnpm test:coverage      # Ejecuta los tests con cobertura
+pnpm test:ui            # Ejecuta la interfaz de tests
+pnpm check              # Ejecuta formateadores, linters y tests con cobertura
 ```
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contribuir
 
-Contributions are welcome 🎉
+Las contribuciones son bienvenidas 🎉
 
-Steps:
+Pasos:
 
-1. Fork the project
-2. Create a branch (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -m 'Add new feature'`)
-4. Push to your branch (`git push origin feature/new-feature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-Specify the project license here.
-
-Example:
-
-MIT © Your Name
+1. Haz un fork del proyecto
+2. Crea una rama (`git checkout -b feature/new-feature`)
+3. Haz commit de tus cambios (`git commit -m 'Add new feature'`)
+4. Haz push a tu rama (`git push origin feature/new-feature`)
+5. Abre un Pull Request
