@@ -2,7 +2,7 @@ import type { CollectionEntry } from 'astro:content';
 
 export type Category = CollectionEntry<'lessons'>['data']['category'];
 
-export const categories: Category[] = ['ux', 'ui', 'components', 'business', 'projects'];
+export const categories: Category[] = ['ux', 'ui', 'components', 'business', 'projects', 'jobsearch'];
 
 export const categoryLabels: Record<Category, string> = {
     ux: 'Experiencia de Usuario (UX)',
@@ -10,6 +10,7 @@ export const categoryLabels: Record<Category, string> = {
     components: 'Componentes de Interfaz',
     business: 'Lógica de Negocio',
     projects: 'Proyectos de Diseño UX/UI',
+    jobsearch: 'Búsqueda de Empleo',
 };
 
 export const categoryShortLabels: Record<Category, string> = {
@@ -18,4 +19,5 @@ export const categoryShortLabels: Record<Category, string> = {
     components: 'Componentes',
     business: 'Negocio',
     projects: 'Proyectos',
+    jobsearch: 'Empleo',
 };
