@@ -1,0 +1,37 @@
+---
+import './ExerciseList.css';
+
+import FreeTextExercise from './exercises/FreeTextExercise.astro';
+import MultipleChoiceExercise from './exercises/MultipleChoiceExercise.astro';
+import OrderingExercise from './exercises/OrderingExercise.astro';
+import type { Exercise } from '../types/exercises';
+
+interface Props {
+    exercises: Exercise[];
+    lessonSlug: string;
+}
+
+const { exercises, lessonSlug } = Astro.props;
+const exerciseIds = JSON.stringify(exercises.map((exercise) => exercise.id));
+---
+
+{
+    exercises.length > 0 && (
+        <section
+            class="exercise-list"
+            aria-label="Ejercicios prácticos"
+            data-lesson-slug={lessonSlug}
+            data-exercise-ids={exerciseIds}
+        >
+            <h2>Ponlo en práctica</h2>
+            {exercises.map((exercise, index) => (
+                <div class="exercise-wrapper">
+                    <p class="exercise-number">Ejercicio {index + 1}</p>
+                    {exercise.type === 'ordering' && <OrderingExercise exercise={exercise} />}
+                    {exercise.type === 'free-text' && <FreeTextExercise exercise={exercise} />}
+                    {exercise.type === 'multiple-choice' && <MultipleChoiceExercise exercise={exercise} />}
+                </div>
+            ))}
+        </section>
+    )
+}

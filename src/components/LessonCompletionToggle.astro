@@ -1,0 +1,16 @@
+---
+import './LessonCompletionToggle.css';
+
+interface Props {
+    lessonSlug: string;
+}
+
+const { lessonSlug } = Astro.props;
+---
+
+<div class="completion-toggle" data-lesson-slug={lessonSlug}>
+    <button type="button" class="completion-toggle-btn" aria-pressed="false">Marcar como completada</button>
+    <p class="completion-toggle-status" role="status" aria-live="polite">Aún no has completado esta lección.</p>
+</div>
+
+<script src="../scripts/completion-toggle.ts"></script>

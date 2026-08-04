@@ -1,0 +1,49 @@
+---
+import './LessonCategorySection.css';
+
+import LessonCard from './LessonCard.astro';
+import { categoryLabels } from '../lib/categories';
+import { levelLabels, levels } from '../lib/levels';
+import type { Category } from '../lib/categories';
+import type { Level } from '../lib/levels';
+import type { CollectionEntry } from 'astro:content';
+
+type Lesson = CollectionEntry<'lessons'>;
+
+interface Props {
+    category: Category;
+    lessons: Lesson[];
+    headingLevel?: 'h1' | 'h2';
+    showHeading?: boolean;
+}
+
+const { category, lessons, headingLevel = 'h2', showHeading = true } = Astro.props;
+const Heading = headingLevel;
+
+const byLevel = (level: Level) => lessons.filter((lesson) => lesson.data.level === level);
+---
+
+<section
+    class="lesson-group"
+    aria-labelledby={showHeading ? `${category}-heading` : undefined}
+    aria-label={showHeading ? undefined : categoryLabels[category]}
+>
+    {showHeading && <Heading id={`${category}-heading`}>{categoryLabels[category]}</Heading>}
+    {
+        levels.map((level) => {
+            const levelLessons = byLevel(level);
+            return (
+                levelLessons.length > 0 && (
+                    <div class="level-group" data-level={level}>
+                        <h3 class="level-heading">{levelLabels[level]}</h3>
+                        <ul class="lesson-grid">
+                            {levelLessons.map((lesson) => (
+                                <LessonCard lesson={lesson} />
+                            ))}
+                        </ul>
+                    </div>
+                )
+            );
+        })
+    }
+</section>

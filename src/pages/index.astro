@@ -1,17 +1,37 @@
 ---
+import './index.css';
 
+import { getCollection } from 'astro:content';
+
+import LessonCategorySection from '../components/LessonCategorySection.astro';
+import LessonFilters from '../components/LessonFilters.astro';
+import SidebarLayout from '../layouts/SidebarLayout.astro';
+import { categories } from '../lib/categories';
+
+const lessons = await getCollection('lessons');
+
+const byCategory = (category: (typeof categories)[number]) =>
+    lessons.filter((lesson) => lesson.data.category === category).sort((a, b) => a.data.order - b.data.order);
+
+const sections = categories.map((category) => ({ category, lessons: byCategory(category) }));
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>mele-astro-template</title>
-    </head>
-    <body>
-        <h1>Hello World</h1>
-    </body>
-</html>
+<SidebarLayout
+    title="Aprende UX/UI"
+    description="Lecciones interactivas de diseño UX y UI para dar tus primeros pasos."
+>
+    <main>
+        <header class="home-header">
+            <h1>Aprende UX/UI</h1>
+            <p>Lecciones breves de teoría con ejercicios prácticos para reforzar lo aprendido.</p>
+        </header>
+
+        <LessonFilters />
+
+        {
+            sections.map(({ category, lessons: categoryLessons }) => (
+                <LessonCategorySection category={category} lessons={categoryLessons} />
+            ))
+        }
+    </main>
+</SidebarLayout>

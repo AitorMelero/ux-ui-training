@@ -1,0 +1,24 @@
+---
+import './LessonCard.css';
+
+import { levelLabels } from '../lib/levels';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    lesson: CollectionEntry<'lessons'>;
+}
+
+const { lesson } = Astro.props;
+---
+
+<li class="lesson-card" data-lesson-slug={lesson.id} data-subcategory={lesson.data.subcategory}>
+    <a href={`/lessons/${lesson.id}`}>
+        <span class="lesson-order">Lección {lesson.data.order}</span>
+        <span class={`lesson-level lesson-level--${lesson.data.level}`}>{levelLabels[lesson.data.level]}</span>
+        <span class="lesson-completed-badge" hidden>✓ Completada</span>
+        <h3>{lesson.data.title}</h3>
+        <p>{lesson.data.description}</p>
+    </a>
+</li>
+
+<script src="../scripts/lesson-card.ts"></script>

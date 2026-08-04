@@ -1,0 +1,47 @@
+---
+import './OrderingExercise.css';
+
+import type { OrderingExerciseData } from '../../types/exercises';
+
+interface Props {
+    exercise: OrderingExerciseData;
+}
+
+const { exercise } = Astro.props;
+const correctOrder = JSON.stringify(exercise.items);
+---
+
+<div class="ordering-exercise" data-exercise-id={exercise.id} data-correct-order={correctOrder}>
+    <p class="exercise-prompt">{exercise.prompt}</p>
+    <ol class="ordering-list">
+        {
+            exercise.items.map((item) => (
+                <li class="ordering-item" draggable="true">
+                    <span class="drag-handle" aria-hidden="true">
+                        ⠿
+                    </span>
+                    <span class="ordering-item-text">{item}</span>
+                    <span class="ordering-item-controls">
+                        <button type="button" class="move-up" aria-label="Subir este elemento">
+                            ↑
+                        </button>
+                        <button type="button" class="move-down" aria-label="Bajar este elemento">
+                            ↓
+                        </button>
+                    </span>
+                </li>
+            ))
+        }
+    </ol>
+    <button type="button" class="check-btn">Comprobar orden</button>
+    <p class="feedback" role="status" aria-live="polite"></p>
+    {
+        exercise.explanation && (
+            <p class="explanation" hidden>
+                {exercise.explanation}
+            </p>
+        )
+    }
+</div>
+
+<script src="../../scripts/ordering-exercise.ts"></script>

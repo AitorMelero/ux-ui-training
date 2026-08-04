@@ -1,0 +1,18 @@
+---
+import './404.css';
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { categories, categoryLabels } from '../lib/categories';
+---
+
+<BaseLayout title="Página no encontrada · Aprende UX/UI" description="La página que buscas no existe o se ha movido.">
+    <main class="not-found">
+        <p class="not-found-code" aria-hidden="true">404</p>
+        <h1>Página no encontrada</h1>
+        <p class="not-found-message">La lección o página que buscas no existe o se ha movido.</p>
+        <a class="not-found-cta" href="/">Volver al inicio</a>
+        <nav class="not-found-categories" aria-label="Categorías de lecciones">
+            {categories.map((category) => <a href={`/${category}`}>{categoryLabels[category]}</a>)}
+        </nav>
+    </main>
+</BaseLayout>

@@ -1,0 +1,49 @@
+---
+import './category-page.css';
+
+import { getCollection } from 'astro:content';
+
+import LessonCategorySection from '../components/LessonCategorySection.astro';
+import LessonFilters from '../components/LessonFilters.astro';
+import SidebarLayout from '../layouts/SidebarLayout.astro';
+import { categories, categoryDescriptions, categoryLabels } from '../lib/categories';
+import { categorySubcategories } from '../lib/categorySubcategories';
+import type { InferGetStaticPropsType } from 'astro';
+
+export async function getStaticPaths() {
+    const lessons = await getCollection('lessons');
+
+    return categories.map((category) => ({
+        params: { category },
+        props: {
+            category,
+            lessons: lessons
+                .filter((lesson) => lesson.data.category === category)
+                .sort((a, b) => a.data.order - b.data.order),
+        },
+    }));
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { category, lessons } = Astro.props as Props;
+const label = categoryLabels[category];
+
+const subcategories = categorySubcategories[category] ?? [];
+---
+
+<SidebarLayout
+    title={`${label} · Aprende UX/UI`}
+    description={`Lecciones de ${label} para dar tus primeros pasos.`}
+    activeCategory={category}
+>
+    <main>
+        <header class="category-header">
+            <h1>{label}</h1>
+            <p>{categoryDescriptions[category]}</p>
+        </header>
+
+        <LessonFilters subcategories={subcategories} />
+        <LessonCategorySection category={category} lessons={lessons} showHeading={false} />
+    </main>
+</SidebarLayout>

@@ -1,0 +1,72 @@
+---
+import './LessonFilters.css';
+
+import { levelLabels, levels } from '../lib/levels';
+
+interface Props {
+    subcategories?: { key: string; label: string }[];
+}
+
+const { subcategories = [] } = Astro.props;
+---
+
+<div class="lesson-filters">
+    <div class="lesson-search">
+        <label for="lesson-search-input" class="lesson-filters-label">Buscar lecciones</label>
+        <input
+            type="search"
+            id="lesson-search-input"
+            class="lesson-search-input"
+            placeholder="Busca una lección por su nombre..."
+            autocomplete="off"
+        />
+    </div>
+
+    <div class="lesson-level-filter" role="group" aria-label="Filtrar por nivel">
+        <span class="lesson-filters-label">Filtrar por nivel</span>
+        <div class="lesson-level-filter-options">
+            <button type="button" class="lesson-level-filter-button" data-level="all" aria-pressed="true">
+                Todos
+            </button>
+            {
+                levels.map((level) => (
+                    <button type="button" class="lesson-level-filter-button" data-level={level} aria-pressed="false">
+                        {levelLabels[level]}
+                    </button>
+                ))
+            }
+        </div>
+    </div>
+
+    {
+        subcategories.length > 0 && (
+            <div class="lesson-subcategory-filter" role="group" aria-label="Filtrar por tipo de elemento">
+                <span class="lesson-filters-label">Filtrar por tipo</span>
+                <div class="lesson-subcategory-filter-options">
+                    <button
+                        type="button"
+                        class="lesson-subcategory-filter-button"
+                        data-subcategory="all"
+                        aria-pressed="true"
+                    >
+                        Todos
+                    </button>
+                    {subcategories.map(({ key, label }) => (
+                        <button
+                            type="button"
+                            class="lesson-subcategory-filter-button"
+                            data-subcategory={key}
+                            aria-pressed="false"
+                        >
+                            {label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    <p class="lesson-filters-empty" hidden>No se encontraron lecciones con esos filtros.</p>
+</div>
+
+<script src="../scripts/lesson-filters.ts"></script>

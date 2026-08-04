@@ -1,0 +1,83 @@
+.multiple-choice-exercise {
+    border: 1px solid #d8dbe3;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-block: 1rem;
+    background: #fafbfc;
+}
+
+.multiple-choice-exercise .exercise-prompt {
+    font-weight: 600;
+    margin-block-start: 0;
+}
+
+.multiple-choice-exercise .options-list {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.multiple-choice-exercise .option-item {
+    padding: 0.6rem 0.85rem;
+    border: 1px solid #ccd1db;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+
+.multiple-choice-exercise .option-item label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    cursor: pointer;
+}
+
+.multiple-choice-exercise .option-item input {
+    margin-top: 0.2rem;
+}
+
+.multiple-choice-exercise .option-item.is-correct {
+    border-color: #2f9e44;
+    background: #ebfbee;
+}
+
+.multiple-choice-exercise .option-item.is-incorrect {
+    border-color: #e03131;
+    background: #fff5f5;
+}
+
+.multiple-choice-exercise .option-explanation {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.multiple-choice-exercise .check-btn {
+    border: none;
+    border-radius: 0.5rem;
+    background: #364fc7;
+    color: #fff;
+    padding: 0.6rem 1.1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.multiple-choice-exercise .check-btn:hover {
+    background: #2f3ea3;
+}
+
+.multiple-choice-exercise .feedback {
+    min-height: 1.5rem;
+    font-weight: 600;
+    margin-block-start: 0.75rem;
+}
+
+.multiple-choice-exercise .feedback.is-success {
+    color: #2f9e44;
+}
+
+.multiple-choice-exercise .feedback.is-error {
+    color: #e03131;
+}

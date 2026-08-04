@@ -1,0 +1,37 @@
+---
+import './FreeTextExercise.css';
+
+import type { FreeTextExerciseData } from '../../types/exercises';
+
+interface Props {
+    exercise: FreeTextExerciseData;
+}
+
+const { exercise } = Astro.props;
+const acceptedAnswers = JSON.stringify(exercise.acceptedAnswers.map((answer) => answer.trim().toLowerCase()));
+const inputId = `answer-${exercise.id}`;
+---
+
+<div class="free-text-exercise" data-exercise-id={exercise.id} data-accepted-answers={acceptedAnswers}>
+    <label class="exercise-prompt" for={inputId}>{exercise.prompt}</label>
+    <div class="input-row">
+        <input
+            type="text"
+            id={inputId}
+            class="answer-input"
+            placeholder={exercise.placeholder ?? 'Escribe tu respuesta aquí...'}
+            autocomplete="off"
+        />
+        <button type="button" class="check-btn">Comprobar</button>
+    </div>
+    <p class="feedback" role="status" aria-live="polite"></p>
+    {
+        exercise.explanation && (
+            <p class="explanation" hidden>
+                {exercise.explanation}
+            </p>
+        )
+    }
+</div>
+
+<script src="../../scripts/free-text-exercise.ts"></script>

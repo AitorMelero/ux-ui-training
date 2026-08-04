@@ -1,0 +1,24 @@
+---
+import './SidebarLayout.css';
+
+import CategorySidebar from '../components/CategorySidebar.astro';
+import BaseLayout from './BaseLayout.astro';
+import type { Category } from '../lib/categories';
+
+interface Props {
+    title: string;
+    description?: string;
+    activeCategory?: Category;
+}
+
+const { title, description, activeCategory } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+    <div class="with-sidebar">
+        <CategorySidebar activeCategory={activeCategory} />
+        <div class="with-sidebar-content">
+            <slot />
+        </div>
+    </div>
+</BaseLayout>

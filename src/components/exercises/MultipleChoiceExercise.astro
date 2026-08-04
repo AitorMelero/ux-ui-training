@@ -1,0 +1,47 @@
+---
+import './MultipleChoiceExercise.css';
+
+import type { MultipleChoiceExerciseData } from '../../types/exercises';
+
+interface Props {
+    exercise: MultipleChoiceExerciseData;
+}
+
+const { exercise } = Astro.props;
+const inputType = exercise.allowMultiple ? 'checkbox' : 'radio';
+const groupName = `mc-${exercise.id}`;
+---
+
+<div
+    class="multiple-choice-exercise"
+    data-exercise-id={exercise.id}
+    data-allow-multiple={String(exercise.allowMultiple)}
+>
+    <p class="exercise-prompt">{exercise.prompt}</p>
+    <ul class="options-list">
+        {
+            exercise.options.map((option, index) => (
+                <li class="option-item">
+                    <label>
+                        <input
+                            type={inputType}
+                            name={groupName}
+                            value={String(index)}
+                            data-correct={String(option.correct)}
+                        />
+                        <span class="option-text">{option.text}</span>
+                    </label>
+                    {option.explanation && (
+                        <p class="option-explanation" hidden>
+                            {option.explanation}
+                        </p>
+                    )}
+                </li>
+            ))
+        }
+    </ul>
+    <button type="button" class="check-btn">Comprobar respuesta</button>
+    <p class="feedback" role="status" aria-live="polite"></p>
+</div>
+
+<script src="../../scripts/multiple-choice-exercise.ts"></script>

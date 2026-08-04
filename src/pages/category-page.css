@@ -1,0 +1,8 @@
+.category-header h1 {
+    margin-block-end: 0.5rem;
+}
+
+.category-header p {
+    color: #495057;
+    max-width: 40rem;
+}

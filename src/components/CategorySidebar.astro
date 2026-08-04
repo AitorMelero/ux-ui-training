@@ -1,0 +1,49 @@
+---
+import './CategorySidebar.css';
+
+import { categories, categoryLabels } from '../lib/categories';
+import type { Category } from '../lib/categories';
+
+interface Props {
+    activeCategory?: Category;
+}
+
+const { activeCategory } = Astro.props;
+---
+
+<nav class="category-sidebar" aria-label="Categorías de lecciones">
+    <button
+        type="button"
+        id="category-sidebar-toggle"
+        class="category-sidebar-toggle"
+        aria-expanded="true"
+        aria-controls="category-sidebar-panel"
+    >
+        <svg class="icon-hamburger" viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true">
+            <path d="M3 5.5h14M3 10h14M3 14.5h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+            ></path>
+        </svg>
+        <svg class="icon-close" viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true">
+            <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
+        </svg>
+        <span>Categorías</span>
+    </button>
+    <div id="category-sidebar-panel" class="category-sidebar-panel">
+        <ul>
+            <li>
+                <a href="/" aria-current={activeCategory === undefined ? 'page' : undefined}>Todo</a>
+            </li>
+            {
+                categories.map((category) => (
+                    <li>
+                        <a href={`/${category}`} aria-current={activeCategory === category ? 'page' : undefined}>
+                            {categoryLabels[category]}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</nav>
+
+<script src="../scripts/category-sidebar.ts"></script>
