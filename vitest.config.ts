@@ -18,6 +18,7 @@ export default getViteConfig({
                 'src/**/index.ts',
                 '**/__mocks__/**',
                 '**/.*.md',
+                'src/content/lessons/**',
             ],
             include: ['src/**'],
         },

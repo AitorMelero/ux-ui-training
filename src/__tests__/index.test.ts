@@ -50,8 +50,8 @@ describe('index page', () => {
     });
 
     test('hides the completed badge with CSS even before the client script runs, so a new visitor never sees it', () => {
-        const componentPath = fileURLToPath(new URL('../components/LessonCard.astro', import.meta.url));
-        const source = readFileSync(componentPath, 'utf-8');
+        const stylesheetPath = fileURLToPath(new URL('../components/LessonCard.css', import.meta.url));
+        const source = readFileSync(stylesheetPath, 'utf-8');
 
         expect(source).toMatch(/\.lesson-completed-badge\[hidden\]\s*{\s*display:\s*none;/);
     });

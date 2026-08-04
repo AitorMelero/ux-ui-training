@@ -128,4 +128,33 @@ describe('progress', () => {
         expect(isLessonCompleted('que-es-ux')).toBe(false);
         expect(getCorrectExerciseIds('que-es-ux')).toEqual([]);
     });
+
+    test('gracefully recovers when the stored JSON is valid but not an object', () => {
+        globalThis.localStorage.setItem('ux-ui-training:lesson-progress:que-es-ux', '42');
+
+        expect(isLessonCompleted('que-es-ux')).toBe(false);
+        expect(getCorrectExerciseIds('que-es-ux')).toEqual([]);
+    });
+
+    test('ignores a stored correctExerciseIds that is not an array of strings', () => {
+        globalThis.localStorage.setItem(
+            'ux-ui-training:lesson-progress:que-es-ux',
+            JSON.stringify({ completed: false, correctExerciseIds: [1, 2, 3] }),
+        );
+
+        expect(getCorrectExerciseIds('que-es-ux')).toEqual([]);
+    });
+
+    test('gracefully no-ops when accessing localStorage throws (e.g. private browsing)', () => {
+        Reflect.deleteProperty(globalThis, 'localStorage');
+        Object.defineProperty(globalThis, 'localStorage', {
+            configurable: true,
+            get() {
+                throw new Error('SecurityError');
+            },
+        });
+
+        expect(isLessonCompleted('que-es-ux')).toBe(false);
+        expect(() => setLessonCompleted('que-es-ux', true)).not.toThrow();
+    });
 });
