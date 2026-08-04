@@ -46,7 +46,7 @@ const { activeCategory } = Astro.props;
 
 <style>
     .category-sidebar-toggle {
-        display: none;
+        display: inline-flex;
         align-items: center;
         gap: 0.5rem;
         min-height: 2.75rem;
@@ -82,6 +82,14 @@ const { activeCategory } = Astro.props;
         display: block;
     }
 
+    .category-sidebar-panel {
+        background: #fff;
+        border: 1px solid #d8dbe3;
+        border-radius: 0.75rem;
+        padding: 0.6rem;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+    }
+
     .category-sidebar-panel ul {
         display: flex;
         flex-direction: column;
@@ -111,15 +119,10 @@ const { activeCategory } = Astro.props;
     }
 
     @media (max-width: 640px) {
-        .category-sidebar-toggle {
-            display: inline-flex;
-        }
-
         .category-sidebar-panel ul {
             flex-direction: row;
             flex-wrap: wrap;
             gap: 0.5rem;
-            padding-block-start: 0.5rem;
         }
     }
 </style>
