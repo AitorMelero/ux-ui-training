@@ -12,16 +12,21 @@ interface Props {
     category: Category;
     lessons: Lesson[];
     headingLevel?: 'h1' | 'h2';
+    showHeading?: boolean;
 }
 
-const { category, lessons, headingLevel = 'h2' } = Astro.props;
+const { category, lessons, headingLevel = 'h2', showHeading = true } = Astro.props;
 const Heading = headingLevel;
 
 const byLevel = (level: Level) => lessons.filter((lesson) => lesson.data.level === level);
 ---
 
-<section class="lesson-group" aria-labelledby={`${category}-heading`}>
-    <Heading id={`${category}-heading`}>{categoryLabels[category]}</Heading>
+<section
+    class="lesson-group"
+    aria-labelledby={showHeading ? `${category}-heading` : undefined}
+    aria-label={showHeading ? undefined : categoryLabels[category]}
+>
+    {showHeading && <Heading id={`${category}-heading`}>{categoryLabels[category]}</Heading>}
     {
         levels.map((level) => {
             const levelLessons = byLevel(level);
