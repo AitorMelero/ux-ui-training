@@ -56,3 +56,30 @@
     border-radius: 0.3rem;
     font-size: 0.9em;
 }
+
+.lesson-navigation {
+    margin-block-start: 2rem;
+    padding-block-start: 1.5rem;
+    border-block-start: 1px solid #d8dbe3;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.next-lesson-link {
+    display: inline-block;
+    padding: 0.65rem 1.1rem;
+    border-radius: 0.5rem;
+    background: #364fc7;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.next-lesson-link:hover {
+    background: #2b3ea3;
+}
+
+.next-lesson-link:focus-visible {
+    outline: 2px solid #364fc7;
+    outline-offset: 2px;
+}

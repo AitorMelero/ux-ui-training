@@ -59,4 +59,41 @@ describe('lesson detail page', () => {
             expect(paths.some((path) => path.params.slug === lesson.id)).toBe(true);
         }
     });
+
+    test('links back to the lesson’s category page instead of the homepage', async () => {
+        const paths = await getStaticPaths();
+        const path = paths.find((entry) => entry.params.slug === 'que-es-ux');
+        expect(path).toBeDefined();
+        if (!path) return;
+
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(LessonPage, { props: path.props });
+
+        expect(result).toMatch(new RegExp(`<a class="back-link" href="/${path.props.lesson.data.category}"`));
+    });
+
+    test('links to the next lesson in the same category when one exists', async () => {
+        const paths = await getStaticPaths();
+        const path = paths.find((entry) => entry.props.nextLesson !== undefined);
+        expect(path).toBeDefined();
+        if (!path || !path.props.nextLesson) return;
+
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(LessonPage, { props: path.props });
+
+        expect(result).toContain(`href="/lessons/${path.props.nextLesson.id}"`);
+        expect(result).toContain(path.props.nextLesson.title);
+    });
+
+    test('does not render a next-lesson link for the last lesson of a category', async () => {
+        const paths = await getStaticPaths();
+        const path = paths.find((entry) => entry.props.nextLesson === undefined);
+        expect(path).toBeDefined();
+        if (!path) return;
+
+        const container = await AstroContainer.create();
+        const result = await container.renderToString(LessonPage, { props: path.props });
+
+        expect(result).not.toContain('next-lesson-link');
+    });
 });

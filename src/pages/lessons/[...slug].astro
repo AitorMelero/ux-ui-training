@@ -11,15 +11,30 @@ import type { InferGetStaticPropsType } from 'astro';
 
 export async function getStaticPaths() {
     const lessons = await getCollection('lessons');
+
+    const nextLessonByCategory = new Map<string, { id: string; title: string }>();
+    for (const category of new Set(lessons.map((lesson) => lesson.data.category))) {
+        const lessonsInCategory = lessons
+            .filter((lesson) => lesson.data.category === category)
+            .sort((a, b) => a.data.order - b.data.order);
+
+        lessonsInCategory.forEach((lesson, index) => {
+            const next = lessonsInCategory[index + 1];
+            if (next) {
+                nextLessonByCategory.set(lesson.id, { id: next.id, title: next.data.title });
+            }
+        });
+    }
+
     return lessons.map((lesson) => ({
         params: { slug: lesson.id },
-        props: { lesson },
+        props: { lesson, nextLesson: nextLessonByCategory.get(lesson.id) },
     }));
 }
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-const { lesson } = Astro.props as Props;
+const { lesson, nextLesson } = Astro.props as Props;
 const { Content } = await render(lesson);
 
 const categoryLabel = categoryShortLabels[lesson.data.category];
@@ -27,7 +42,7 @@ const categoryLabel = categoryShortLabels[lesson.data.category];
 
 <BaseLayout title={lesson.data.title} description={lesson.data.description}>
     <main class="lesson">
-        <a class="back-link" href="/">← Volver a todas las lecciones</a>
+        <a class="back-link" href={`/${lesson.data.category}`}>← Volver a lecciones de {categoryLabel}</a>
         <p class="lesson-category">{categoryLabel}</p>
         <h1>{lesson.data.title}</h1>
         <p class="lesson-description">{lesson.data.description}</p>
@@ -36,5 +51,14 @@ const categoryLabel = categoryShortLabels[lesson.data.category];
         </div>
         <LessonCompletionToggle lessonSlug={lesson.id} />
         <ExerciseList exercises={lesson.data.exercises} lessonSlug={lesson.id} />
+        {
+            nextLesson && (
+                <nav class="lesson-navigation" aria-label="Navegación entre lecciones">
+                    <a class="next-lesson-link" href={`/lessons/${nextLesson.id}`}>
+                        Siguiente lección: {nextLesson.title} →
+                    </a>
+                </nav>
+            )
+        }
     </main>
 </BaseLayout>

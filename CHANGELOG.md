@@ -5,6 +5,14 @@ Todos los cambios relevantes de este proyecto se documentan en este fichero.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 y este proyecto sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-08-12
+
+### Added
+
+- Botón para ir a la siguiente lección de la misma categoría sin salir de la lección actual.
+- El enlace "volver a todas las lecciones" ahora lleva a la categoría de origen de la lección en vez de al inicio.
+- Logo/cabecera persistente visible en todas las páginas, incluidas las lecciones, que lleva a la página de inicio.
+
 ## [1.0.0] - 2026-08-04
 
 ### Added
