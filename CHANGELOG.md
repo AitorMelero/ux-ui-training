@@ -5,6 +5,19 @@ Todos los cambios relevantes de este proyecto se documentan en este fichero.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 y este proyecto sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-08-17
+
+### Added
+
+- Categoría "Psicología UX", con tres subcategorías (memoria y carga cognitiva, toma de decisiones y sesgos, percepción) y seis lecciones nuevas.
+- Subcategoría "Comercio y conversión" dentro de Proyectos de diseño UX/UI, con cuatro lecciones nuevas: diseñar un e-commerce, diseñar banca y fintech, diseñar una landing page y diseñar flujos transversales (login, onboarding y checkout).
+- Agente `release-manager` para gestionar el ciclo completo de una nueva versión: análisis de cambios, CHANGELOG, versión, PRs y Release de GitHub.
+- Integración de CodeGraph para que los agentes de IA que trabajan en este repo puedan consultar la estructura del código en vez de recurrir a búsquedas por texto.
+
+### Changed
+
+- El favicon por defecto de Astro se sustituye por el logo propio (dos pantallas/tarjetas superpuestas).
+
 ## [1.1.0] - 2026-08-12
 
 ### Added
