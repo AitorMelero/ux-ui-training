@@ -2,7 +2,7 @@ import type { CollectionEntry } from 'astro:content';
 
 export type Category = CollectionEntry<'lessons'>['data']['category'];
 
-export const categories: Category[] = ['ux', 'ui', 'components', 'business', 'projects', 'jobsearch'];
+export const categories: Category[] = ['ux', 'ui', 'components', 'business', 'projects', 'jobsearch', 'psychology'];
 
 export const categoryLabels: Record<Category, string> = {
     ux: 'Experiencia de Usuario (UX)',
@@ -11,6 +11,7 @@ export const categoryLabels: Record<Category, string> = {
     business: 'Lógica de Negocio',
     projects: 'Proyectos de Diseño UX/UI',
     jobsearch: 'Búsqueda de Empleo',
+    psychology: 'Psicología UX',
 };
 
 export const categoryShortLabels: Record<Category, string> = {
@@ -20,6 +21,7 @@ export const categoryShortLabels: Record<Category, string> = {
     business: 'Negocio',
     projects: 'Proyectos',
     jobsearch: 'Empleo',
+    psychology: 'Psicología',
 };
 
 export const categoryDescriptions: Record<Category, string> = {
@@ -30,4 +32,6 @@ export const categoryDescriptions: Record<Category, string> = {
     business: 'Cómo las decisiones de diseño se conectan con objetivos de negocio, métricas y restricciones reales.',
     projects: 'Ejercicios y proyectos guiados para practicar el proceso de diseño de principio a fin.',
     jobsearch: 'Consejos prácticos para preparar tu candidatura: CV, portfolio, redes profesionales y entrevistas.',
+    psychology:
+        'Principios de psicología cognitiva —memoria, sesgos de decisión y percepción— aplicados a decisiones de diseño de producto.',
 };
