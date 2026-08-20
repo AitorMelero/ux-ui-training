@@ -31,7 +31,7 @@ Este proyecto está construido con:
 
 ## 📚 Categorías de lecciones
 
-Las lecciones (`src/content/lessons/`) se organizan en seis categorías, cada una con niveles (principiante, intermedio, avanzado) y subcategorías:
+Las lecciones (`src/content/lessons/`) se organizan en siete categorías, cada una con niveles (principiante, intermedio, avanzado) y subcategorías:
 
 - **UX** — Experiencia de Usuario
 - **UI** — Interfaz de Usuario
@@ -39,6 +39,7 @@ Las lecciones (`src/content/lessons/`) se organizan en seis categorías, cada un
 - **Negocio** — Lógica de Negocio
 - **Proyectos** — Proyectos de Diseño UX/UI
 - **Empleo** — Búsqueda de Empleo
+- **Psicología** — Psicología UX
 
 Cada lección puede incluir ejercicios interactivos (ordenar, texto libre u opción múltiple) definidos en su frontmatter y validados con Zod.
 
@@ -61,6 +62,7 @@ src/
 │── types/                 # Tipos compartidos
 │── content.config.ts      # Definición y validación (Zod) de la colección de lecciones
 public/
+scripts/                    # Scripts de repo (fuera de src/): sincroniza el contenido de las lecciones antes de los tests
 ```
 
 ---
@@ -96,6 +98,7 @@ pnpm format:check       # Ejecuta Prettier para comprobar errores de formato
 pnpm format:fix         # Ejecuta Prettier para corregir errores de formato
 pnpm lint:js:check      # Ejecuta ESLint para comprobar errores de lint
 pnpm lint:js:fix        # Ejecuta ESLint para corregir errores de lint
+pnpm sync               # Sincroniza el contenido de las lecciones (se ejecuta automáticamente antes de los tests)
 pnpm test               # Ejecuta los tests
 pnpm test:coverage      # Ejecuta los tests con cobertura
 pnpm test:ui            # Ejecuta la interfaz de tests
