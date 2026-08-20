@@ -54,11 +54,19 @@ esperar su confirmación en varios puntos).
   cabecera del fichero, por encima de la versión anterior), con el contenido aprobado en el
   paso 2.
 - Actualiza `"version"` en `package.json` de la versión anterior a la nueva.
+- Analiza si `README.md` necesita actualizarse a raíz de los cambios reales incorporados en esta
+  versión (nuevas categorías de lecciones, cambios en la estructura de `src/`, scripts nuevos o
+  renombrados en `package.json`, cambios en las tecnologías/dependencias clave que ya se listan en
+  el README, etc.). Si detectas que sí, actualiza únicamente las secciones afectadas manteniendo
+  el estilo y formato ya usado en el fichero (emojis, índice enlazado con anclas, bloques de
+  código). Si no hace falta ningún cambio, no toques `README.md` ni lo menciones como cambio en la
+  PR.
 - Verifica con `pnpm check` y `pnpm build`. Si algo falla, corrígelo y repite hasta que ambos
   terminen limpios.
-- Commitea solo `CHANGELOG.md` y `package.json` (nunca `git add -A` a ciegas), con un mensaje de
-  commit que siga el estilo del historial del repo y **sin ninguna mención a Claude, Anthropic,
-  IA/AI, ni líneas `Co-Authored-By: Claude`, `Generated with Claude Code` ni enlaces de sesión.**
+- Commitea `CHANGELOG.md`, `package.json` y, solo si lo has modificado en el paso anterior,
+  `README.md` (nunca `git add -A` a ciegas), con un mensaje de commit que siga el estilo del
+  historial del repo y **sin ninguna mención a Claude, Anthropic, IA/AI, ni líneas
+  `Co-Authored-By: Claude`, `Generated with Claude Code` ni enlaces de sesión.**
 - Haz `git push -u origin doc/update-changelog-<version>`.
 
 ## Paso 4 — PR 1: CHANGELOG + versión, contra `develop`
@@ -68,7 +76,7 @@ esperar su confirmación en varios puntos).
     ```
     ## Resumen
 
-    Se documenta en `CHANGELOG.md` la nueva versión X.Y.Z, siguiendo el formato [Keep a Changelog](https://keepachangelog.com/) ya usado en el fichero, y se actualiza `package.json` (`version`) de `A.B.C` a `X.Y.Z` para que coincida.
+    Se documenta en `CHANGELOG.md` la nueva versión X.Y.Z, siguiendo el formato [Keep a Changelog](https://keepachangelog.com/) ya usado en el fichero, y se actualiza `package.json` (`version`) de `A.B.C` a `X.Y.Z` para que coincida, junto con `README.md` si los cambios de esta versión lo requieren.
 
     - <bullets resumiendo lo añadido/cambiado desde la última versión>
 
@@ -138,8 +146,9 @@ esperar su confirmación en varios puntos).
   mergeada en `main`.
 - No inventes entradas de CHANGELOG ni cambios que no correspondan a commits o PRs reales ya
   mergeados en `develop`.
-- No toques ficheros fuera del alcance de la versión (solo `CHANGELOG.md` y `package.json` en la
-  PR 1; ningún fichero adicional en la PR 2, que es un merge directo de `develop`).
+- No toques ficheros fuera del alcance de la versión: en la PR 1 limítate a `CHANGELOG.md` y
+  `package.json`, más `README.md` únicamente si el análisis del paso 3 concluye que hace falta
+  actualizarlo; ningún fichero adicional en la PR 2, que es un merge directo de `develop`.
 - No confundas esta tarea con publicar un paquete en un registro (npm, GitHub Packages, etc.):
   este repo no publica a ningún registro; "versión" se refiere únicamente a `package.json`, al
   `CHANGELOG.md` y a la Release de GitHub.
