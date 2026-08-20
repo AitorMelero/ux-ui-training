@@ -5,6 +5,20 @@ Todos los cambios relevantes de este proyecto se documentan en este fichero.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 y este proyecto sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-08-20
+
+### Added
+
+- Lección "Nomenclatura tipográfica" en la categoría UI, sobre los nueve roles tipográficos usados en sistemas de diseño (display, headline, heading, title, subtitle, body, caption, overline y label).
+
+### Changed
+
+- El agente `release-manager` ahora analiza también si `README.md` necesita actualizarse a raíz de los cambios de cada nueva versión.
+
+### Fixed
+
+- El README se actualiza para reflejar la categoría "Psicología UX" y el script `pnpm sync`, que faltaban desde su incorporación.
+
 ## [1.2.0] - 2026-08-17
 
 ### Added
